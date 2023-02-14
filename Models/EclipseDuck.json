@@ -1,0 +1,133 @@
+{
+  "appname" : "Eclipse Dark Duck",
+  "appTitle": "Eclipse Dark Duck",
+
+  "assetDir": "../Assets",
+  "curStyleSheet": "Eclipse Light",
+  "style": "App Background",
+  "side": "top",
+  "percentage": 100,
+  "contents": [
+    { "style": "Menu Bar", "contents": [
+        { "style": "Menu Item", "label": "File" },
+        { "style": "Menu Item", "label": "Edit" },
+        { "style": "Menu Item", "label": "Source" },
+        { "style": "Menu Item", "label": "Refactor" },
+        { "style": "Menu Item", "label": "Navigate" },
+        { "style": "Menu Item", "label": "Search" },
+        { "style": "Menu Item", "label": "Project" },
+        { "style": "Menu Item", "label": "Run" },
+        { "style": "Menu Item", "label": "Window" },
+        { "style": "Menu Item", "label": "Help" }
+      ]
+    },
+    { "style": "Menu Bar", "contents": [
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "New" },
+          { "style": "Tool Item", "icon": "Save" },
+          { "style": "Tool Item", "icon": "Save All" }
+        ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Skip All" },
+          { "style": "Tool Item", "icon": "Resume" },
+          { "style": "Tool Item", "icon": "Suspend" },
+          { "style": "Tool Item", "icon": "Resume" },
+          { "style": "Tool Item", "icon": "Terminate" },
+          { "style": "Tool Item", "icon": "Disconnect" },
+          { "style": "Tool Item", "icon": "Step Into" },
+          { "style": "Tool Item", "icon": "Step Over" },
+          { "style": "Tool Item", "icon": "Drop to Frame" },
+          { "style": "Tool Item", "icon": "Use Step Filters" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Open Web Browser" },
+          { "style": "Tool Item", "icon": "Create a new HTML file" },
+          { "style": "Tool Item", "icon": "Create a new JavaScript file" },
+          { "style": "Tool Item", "icon": "Create a new CSS file" },
+          { "style": "Tool Item", "icon": "Search" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Debug" },
+          { "style": "Tool Item", "icon": "Run" },
+          { "style": "Tool Item", "icon": "Run Tool" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Next Annotation" },
+          { "style": "Tool Item", "icon": "Previous Annotation" },
+          { "style": "Tool Item", "icon": "Previous Edit Location" },
+          { "style": "Tool Item", "icon": "Next Edit Location" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Previous Editor" },
+          { "style": "Tool Item", "icon": "Next Editor" },
+          { "style": "Tool Item", "icon": "Pin Editor" },
+          { "style": "Tool Item", "icon": "Step Return" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Open Web Browser" },
+          { "style": "Tool Item", "icon": "Create a new HTML file" },
+          { "style": "Tool Item", "icon": "Create a new JavaScript file" },
+          { "style": "Tool Item", "icon": "Create a new CSS file" },
+          { "style": "Tool Item", "icon": "Search" }
+      ]
+      }
+      ]
+    },
+    { "style": "Status Line", "contents": [
+          { "style": "Menu Item", "label": "Current Model Element:" }
+    ]},
+    { "style": "Part Stack", "side": "left", "percentage": 25, "contents": [
+        { "style": "Menu Bar", "side": "top", "contents": [
+              { "style": "Part (Active)",  "icon": "Run","label": "Package Explorer" },
+              { "style": "spacer" },
+              { "style": "Tool Bar", "contents": [
+                  { "style": "Tool Item", "icon": "Collapse All" },
+                  { "style": "Tool Item", "icon": "Link With Editor" }
+                ]
+              }
+        ]},
+      { "style": "Eclipse Project View", "side": "top", "percentage": 100 }
+    ]},
+    { "style": "Part Stack", "side": "bottom", "percentage": 25, "contents": [
+        { "style": "Menu Bar", "contents": [
+              { "style": "Part (Selected)",  "icon": "Search","label": "Problems" },
+              { "style": "Part",  "icon": "Run","label": "Console" },
+              { "style": "Part",  "icon": "Search","label": "Javadoc" },
+              { "style": "Part",  "icon": "Search","label": "Declaration" },
+              { "style": "spacer" },
+              { "style": "Tool Bar", "contents": [
+                  { "style": "Tool Item", "icon": "Filters..." }
+                ]
+              }
+        ]},
+      { "style": "Eclipse Problems View", "side": "top", "percentage": 100 }
+    ]},
+    { "style": "Part Stack", "side": "right", "percentage": 25, "contents": [
+        { "style": "Menu Bar", "contents": [
+              { "style": "Part",  "icon": "Search","label": "Search" },
+              { "style": "Part (Selected)",  "icon": "Run","label": "Outline" },
+              { "style": "Part",  "icon": "Search","label": "Variables" },
+              { "style": "spacer" },
+              { "style": "Tool Bar", "contents": [
+                  { "style": "Tool Item", "icon": "Collapse All" },
+                  { "style": "Tool Item", "icon": "Sort" },
+                  { "style": "Tool Item", "icon": "Hide Fields" },
+                  { "style": "Tool Item", "icon": "Hide Statics" },
+                  { "style": "Tool Item", "icon": "Hide Privates" },
+                  { "style": "Tool Item", "icon": "Hide Locals" }
+                ]
+              }
+        ]},
+      { "style": "Eclipse Outline View", "side": "top", "percentage": 100 }
+    ]},
+    { "style": "Part Stack", "side": "top", "percentage": 100, "contents": [
+          { "style": "Eclipse Editor Area", "side": "top", "percentage": 100 }
+    ]}
+  ]
+}

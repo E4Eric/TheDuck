@@ -1,0 +1,155 @@
+{
+  "imagePath": "EclDark.png",
+  "name": "Eclipse Dark",
+  "Styles": {
+    "App Background": {
+       "srcX": 50, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "side": "top",
+      "layout": "panel",
+      "percentage": 100,
+      "renderer": "frame"
+    },
+    "Menu Bar": {
+       "srcX": 100, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "side": "top",
+      "layout": "tile",
+      "renderer": "frame"
+    },
+    "Menu": {
+       "srcX": 150, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 5, "th": 2, "rw": 2, "bh": 2,
+
+      "side": "left",
+      "layout": "pack",
+      "renderer": "frame"
+    },
+    "Menu Item": {
+       "srcX": 200, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 8, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+       "fontSpec": "color: #CCCCCC; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "foo"
+    },
+    "Tool Bar": {
+       "srcX": 250, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 2, "th": 2, "rw": 2, "bh": 2,
+
+      "side": "left",
+      "layout": "pack",
+      "renderer": "frame"
+    },
+    "Tool Item": {
+       "srcX": 300, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 2, "th": 2, "rw": 2, "bh": 2,
+
+       "layout": "label",
+       "renderer": "foo"
+    },
+    "Center Area": {
+       "srcX": 350, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 2, "th": 2, "rw": 2, "bh": 2,
+
+      "side": "top",
+      "layout": "panel",
+      "percentage": 100,
+      "renderer": "frame"
+    },
+    "Status Line": {
+       "srcX": 400, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 2, "th": 2, "rw": 2, "bh": 2,
+
+      "side": "bottom",
+      "layout": "tile",
+      "renderer": "frame"
+    },
+    "Part Stack": {
+       "srcX": 450, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 1, "tm": 1, "rm": 1, "bm": 1,
+       "lw": 2, "th": 2, "rw": 2, "bh": 2,
+
+      "percentage": "25",
+      "layout": "panel",
+      "renderer": "frame"
+    },
+    "Part": {
+       "srcX": 500, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "labelGap": 4,
+      "fontSpec": "color: white; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "Part (Selected)": {
+       "srcX": 550, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 0, "th": 0, "rw": 1, "bh": 0,
+
+      "labelGap": 4,
+      "fontSpec": "color: white; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "Part (Active)": {
+       "srcX": 600, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+      "labelGap": 4,
+      "fontSpec": "color: white; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "Eclipse Project View": {
+       "srcX": 168, "srcY": 324, "srcW": 497, "srcH": 816,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "percentage": "100",
+      "layout": "panel",
+      "renderer": "fake view"
+    },
+    "Eclipse Problems View": {
+       "srcX": 812, "srcY": 1220, "srcW": 1589, "srcH": 377,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "percentage": "100",
+      "layout": "panel",
+      "renderer": "fake view"
+    },
+    "Eclipse Outline View": {
+       "srcX": 2797, "srcY": 468, "srcW": 585, "srcH": 741,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "percentage": "100",
+      "layout": "panel",
+      "renderer": "fake view"
+    },
+    "Eclipse Editor Area": {
+       "srcX": 743, "srcY": 236, "srcW": 1873, "srcH": 917,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "percentage": "100",
+      "layout": "panel",
+      "renderer": "fake view"
+    }
+  }
+}

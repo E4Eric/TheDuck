@@ -1,0 +1,8 @@
+{
+  "name": "IDE Actions",
+  "actions": [
+    { "name": "Show Tooltip", "codePath": "showTooltip" },
+    { "name": "Show DropDown", "codePath": "showDropDown" },
+    { "name": "Show SubMenu", "codePath": "showSubMenu" }
+  ]
+}

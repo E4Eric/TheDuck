@@ -1,0 +1,22 @@
+{
+  "imagePath": "EclDark.png",
+  "name": "Eclipse Dark Views",
+  "Views": {
+    "Project Explorer": {
+      "label": "Project Explorer", "icon": "Project Explorer",
+      "Fake Image Style": "Project Explorer"
+    },
+    "Problems": {
+      "label": "Problems", "icon": "Problems", "tooltip": "Problems",
+      "Fake Image Style": "Problems"
+    },
+    "Outline": {
+      "label": "Outline", "icon": "Outline", "tooltip": "Outline",
+      "Fake Image Style": "Outline"
+    },
+    "Editor": {
+      "label": "Editor", "icon": "Editor", "tooltip": "Editor",
+      "Fake Image Style": "Editor"
+    }
+  }
+}

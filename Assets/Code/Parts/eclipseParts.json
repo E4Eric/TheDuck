@@ -1,0 +1,15 @@
+{
+  "name": "Eclipse Dark",
+  "parts": {
+    "Eclipse Project View": {
+      "label": "Project Explorer",
+      "icon": "Project Explorer",
+      "tooltip": "Project Explorer",
+      "style": "Eclipse Project View",
+      "codePath": "EclipseProjectExplorer",
+
+      "toolActions": [ "Collapse All", "Link with Editor" ],
+      "menuActions": [ "Select Working Set", "Deselect Working Set" ]
+    }
+  }
+}
