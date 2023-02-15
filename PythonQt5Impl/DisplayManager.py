@@ -5,6 +5,22 @@ class DisplayManager():
         self.ctx = ctx
         self.layers = {}
 
+    def addLayer(self, name, me):
+        print(f'Add Layer: {name}')
+        self.layers[name] = me
+
+        # force an update
+        dr = me['drawRect']
+        self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
+
+    def removeLayer(self, name):
+        print('remove Layer: ', name)
+        if name in self.layers:
+            tooltipME = self.layers[name]
+            dr = tooltipME['drawRect']
+            self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
+            del self.layers[name]
+
     def getLayoutCode(self, me):
         if 'layout' in me:
             return self.ctx.assetManager.getLayout(me['layout'])
@@ -33,6 +49,11 @@ class DisplayManager():
     def drawModel(self):
         start = time.perf_counter()
         self.drawModelElement(self.ctx.appModel)
+
+        #add layers
+        for layer in self.layers:
+            self.drawModelElement(self.layers[layer])
+
         end = time.perf_counter()
         print('Draw: ', end - start)
 

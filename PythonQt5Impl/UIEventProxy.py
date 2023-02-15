@@ -21,53 +21,62 @@ class UIEventProxy():
         self.curElement = None
         self.timer = None
 
-    def pick(self, me, x ,y):
-        if 'drawRect' not in me:
-            return None
+    def printME(self, me):
+        if me == None:
+            print('None')
+            return
 
-        dr = me['drawRect']
-        if x < dr.x:
-            return None
-        if x > (dr.x + dr.w):
-            return None
-        if y < dr.y:
-            return None
-        if y > (dr.y + dr.h):
-            return None
+        str = ""
+        if 'label' in me:
+            label = me['label']
+            str += f'Label: {label} '
+        if 'icon' in me:
+            label = me['icon']
+            str += f'Icon: {label} '
+        if 'tooltip' in me:
+            label = me['tooltip']
+            str += f'Tooltip: {label} '
+        print(str)
 
-        # drill down
-        if 'contents' in me:
-            for kid in me['contents']:
-                found = self.pick(kid, x,y)
-                if found != None:
-                    return found
+    def enter(self, me):
+        print('enter')
 
-        return me
+    def leave(self, me):
+        print('leave')
+        # HACK!! auto remove any tooltip
+        self.ctx.displayManager.removeLayer('tooltip')
+
+    def hover(self):
+        print('hover')
+        if 'hoverAction' in self.curElement:
+            action = self.ctx.assetManager.getAction(self.curElement['hoverAction'])
+            if action.canExecute(self.ctx, self.curElement):
+                action.execute(self.ctx, self.curElement)
+
+    def setCurElement(self, newcurElement):
+        if (newcurElement == self.curElement):
+            return
+        self.leave(self.curElement)
+        self.curElement = newcurElement
+        self.enter(self.curElement)
+        self.printME(self.curElement)
 
     def mouseMove(self, x, y):
-        pickedME = self.pick(self.ctx.appModel, x, y)
-        if pickedME != None:
-            if pickedME != self.curElement:
-                self.curElement = pickedME
-                str = pickedME['style']
-                if 'label' in pickedME:
-                    str += ' Label: ' + pickedME['label']
-                if 'icon' in pickedME:
-                    str += ' Label: ' + pickedME['icon']
-                print(str)
+        self.mouseX = x
+        self.mouseY = y
+
+        pickedME = self.ctx.displayManager.pick(self.ctx.appModel, x, y)
+        self.setCurElement(pickedME)
 
         def timeout():
-            print("Hover !")
+            self.hover()
             self.timer = None
 
         # restart the timer
         if self.timer != None:
             self.timer.cancel()
-        self.timer = threading.Timer(1, timeout)
+        self.timer = threading.Timer(0.3, timeout)
         self.timer.start()
-
-        self.mouseX = x
-        self.mouseY = y
 
     def mousePressEvent(self, button):
         print(button, " pressed !")

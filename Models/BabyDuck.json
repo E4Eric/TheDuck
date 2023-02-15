@@ -26,8 +26,8 @@
     { "style": "Menu Bar", "contents": [
       { "style": "Tool Bar", "contents": [
           { "style": "Tool Item", "icon": "New", "tooltip": "Test Tooltip", "hoverAction": "Show Tooltip" },
-          { "style": "Tool Item", "icon": "Save" },
-          { "style": "Tool Item", "icon": "Save All" }
+          { "style": "Tool Item", "icon": "Save", "tooltip": "Save", "hoverAction": "Show Tooltip" },
+          { "style": "Tool Item", "icon": "Save All", "tooltip": "Save All", "hoverAction": "Show Tooltip" }
         ]
       },
       { "style": "Tool Bar", "contents": [

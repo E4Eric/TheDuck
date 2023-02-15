@@ -41,6 +41,9 @@ class QTPlatform(QtWidgets.QWidget):
         self.painter.end()
         self.painter = None
 
+    def forceUpdate(self, x, y, w, h):
+        self.update()
+
     def setTransparentColor(self, pixmap, r, g, b):
         # Create a mask from the pixmap that matches the color you want to make transparent
         mask = pixmap.createMaskFromColor(QColor(r, g, b))

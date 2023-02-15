@@ -118,6 +118,46 @@
       "layout": "label",
       "renderer": "foo"
     },
+    "View Tool Bar": {
+       "srcX": 650, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+      "labelGap": 4,
+      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "SizeNS": {
+       "srcX": 700, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+      "labelGap": 4,
+      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "SizeEW": {
+       "srcX": 750, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+      "labelGap": 4,
+      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
+    "Tooltip": {
+       "srcX": 800, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 3, "rm": 5, "bm": 3,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+      "labelGap": 4,
+      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "layout": "label",
+      "renderer": "foo"
+    },
     "Eclipse Project View": {
        "srcX": 168, "srcY": 324, "srcW": 497, "srcH": 816,
        "lm": 0, "tm": 0, "rm": 0, "bm": 0,
