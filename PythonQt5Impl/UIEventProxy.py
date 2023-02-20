@@ -18,8 +18,15 @@ class UIEventProxy():
         self.rButton = False
         self.mButton = False
 
+        # Element handling
         self.curElement = None
+        self.curController = None
+        self.hilighedElement = None
+        self.prehilightStyle = None
+
+        # hover timer
         self.timer = None
+        self.timeout = 0.3
 
     def printME(self, me):
         if me == None:
@@ -41,8 +48,21 @@ class UIEventProxy():
     def enter(self, me):
         print('enter')
 
+        # cache the Controller
+        sd = self.ctx.assetManager.getStyleData(me['style'])
+        if 'controller' in sd:
+            controllerModule = self.ctx.assetManager.getController(sd['controller'])
+            self.curController = controllerModule
+
+        if self.curController != None:
+            if hasattr(self.curController, 'enter'):
+                self.curController.enter(self.ctx, self.curElement)
+
     def leave(self, me):
-        print('leave')
+        if self.curController != None:
+            if hasattr(self.curController, 'leave'):
+                self.curController.leave(self.ctx, self.curElement)
+
         # HACK!! auto remove any tooltip
         self.ctx.displayManager.removeLayer('tooltip')
 
@@ -78,18 +98,20 @@ class UIEventProxy():
         self.timer = threading.Timer(0.3, timeout)
         self.timer.start()
 
+    def handleLClick(self):
+        if self.curController != None:
+            if hasattr(self.curController, 'lclick'):
+                self.curController.lclick(self.ctx, self.curElement)
+
     def mousePressEvent(self, button):
         print(button, " pressed !")
 
         self.downX = self.mouseX
         self.downY = self.mouseY
 
+        self.lButton = button == 'left'
         if button == 'left':
-           lButton = True
-        if button == 'right':
-           rButton = True
-        if button == 'Middle':
-           mButton = True
+            self.handleLClick()
 
     def mouseReleaseEvent(self, button):
         print(button, " released !")

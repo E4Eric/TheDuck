@@ -1,0 +1,31 @@
+{
+  "appname" : "Eclipse Baby Duck",
+  "appTitle": "New Light",
+
+  "assetDir": "../Assets",
+  "curStyleSheet": "New Light",
+  "style": "App Canvas",
+  "percentage": 100,
+  "side": "top",
+  "contents": [
+    { "style": "Main Menu", "contents": [
+        { "style": "Main Menu Item", "label": "File",  "submenu":
+          { "style": "Menu", "contents": [
+            { "style": "Menu Item", "label": "Sub Menu Item 1"},
+            { "style": "Menu Item", "label": "Sub Menu Item 2"},
+            { "style": "Menu Item", "label": "Sub Menu Item 3"}
+          ]}
+        },
+        { "style": "Main Menu Item", "label": "Edit" },
+        { "style": "Main Menu Item", "label": "Source" },
+        { "style": "Main Menu Item", "label": "Refactor" },
+        { "style": "Main Menu Item", "label": "Navigate" },
+        { "style": "Main Menu Item", "label": "Search" },
+        { "style": "Main Menu Item", "label": "Project" },
+        { "style": "Main Menu Item", "label": "Run" },
+        { "style": "Main Menu Item", "label": "Window" },
+        { "style": "Main Menu Item", "label": "Help" }
+      ]
+    }
+  ]
+}

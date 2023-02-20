@@ -1,0 +1,115 @@
+{
+  "imagePath": "newLight.png",
+  "name": "New Light",
+  "Styles": {
+    "Transparent Color": {
+       "srcX": 10, "srcY": 10, "srcW": 1, "srcH": 1
+    },
+    "App Canvas": {
+       "srcX": 200, "srcY": 100, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "side": "top",
+      "percentage": 100,
+      "layout": "panel",
+      "renderer": "frame"
+    },
+    "Main Menu": {
+       "srcX": 200, "srcY": 150, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "side": "top",
+      "layout": "tile",
+      "renderer": "frame"
+    },
+    "Main Menu Item": {
+       "srcX": 200, "srcY": 200, "srcW": 48, "srcH": 48,
+       "lm": 4, "tm": 2, "rm": 6, "bm": 2,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer",
+      "controller": "Main Menu Item"
+    },
+    "Main Menu Item (Over)": {
+       "srcX": 200, "srcY": 250, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Main Menu Item (Open)": {
+       "srcX": 200, "srcY": 300, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Menu": {
+       "srcX": 200, "srcY": 350, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 1, "th": 1, "rw": 1, "bh": 1,
+
+        "side": "left",
+       "layout": "frame",
+       "renderer": "frame"
+    },
+    "Menu Item": {
+       "srcX": 200, "srcY": 400, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Menu Item (Disabled)": {
+       "srcX": 200, "srcY": 450, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: gray; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Menu Item (Over)": {
+       "srcX": 200, "srcY": 500, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Menu Item (Over / Disabled)": {
+       "srcX": 200, "srcY": 550, "srcW": 48, "srcH": 48,
+       "lm": 3, "tm": 1, "rm": 5, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+        "side": "top",
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    }
+  }
+}

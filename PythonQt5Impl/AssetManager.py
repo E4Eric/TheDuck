@@ -38,6 +38,10 @@ class AssetManager():
             image = self.ctx.window.loadImage(imagePath)
             self.cacheImage('Style Sheet/' + styleSheet['name'], image)
 
+    def testForStyle(self, styleName):
+        styleSheet = self.styleCache[self.ctx.appModel['curStyleSheet']]
+        return styleName in styleSheet['Styles']
+
     def getStyleData(self, styleName):
         styleSheet = self.styleCache[self.ctx.appModel['curStyleSheet']]
         styleData = styleSheet['Styles'][styleName]
@@ -128,6 +132,19 @@ class AssetManager():
 
     def getRenderer(self, rendererName):
         return self.rendererCodeCache[rendererName]
+
+    def loadControllers(self, controllersDir):
+        controllerData = self.getJsonData(controllersDir)
+        sys.path.append(controllersDir)
+        for controller in controllerData:
+            self.controllerCache[controller['name']] = controller
+            print("loaded Controller: ", controller['name'])
+            cp = controller['codePath']
+            code = importlib.import_module(cp)
+            self.controllerCodeCache[controller['name']] = code
+
+    def getController(self, controllerName):
+        return self.controllerCodeCache[controllerName]
 
     def draw(self, rendererName, me):
         code = self.rendererCodeCache[rendererName]
@@ -222,6 +239,12 @@ class AssetManager():
         rendererssDir = assetDir + "/Code/Renderers"
         if os.path.isdir(rendererssDir):
             self.loadRenderers(rendererssDir)
+
+        self.controllerCache = {}
+        self.controllerCodeCache = {}
+        controllersDir = assetDir + "/Code/controllers"
+        if os.path.isdir(controllersDir):
+            self.loadControllers(controllersDir)
 
         self.actionCodeCache = {}
         actionsDir = assetDir + "/Code/ActionGroups"

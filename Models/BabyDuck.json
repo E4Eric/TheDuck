@@ -9,9 +9,13 @@
   "percentage": 100,
   "contents": [
     { "style": "Menu Bar", "contents": [
-        { "style": "Menu Item", "label": "File", "LeftClickAction": "Show Submenu", "submenu": [
-          { "style": "Menu Item", "label": "Sub Menu Item 1"}
-        ] },
+        { "style": "Main Menu Item", "label": "File",  "submenu":
+          { "style": "Menu", "contents": [
+            { "style": "Menu Item", "label": "Sub Menu Item 1"},
+            { "style": "Menu Item", "label": "Sub Menu Item 2"},
+            { "style": "Menu Item", "label": "Sub Menu Item 3"}
+          ]}
+        },
         { "style": "Menu Item", "label": "Edit" },
         { "style": "Menu Item", "label": "Source" },
         { "style": "Menu Item", "label": "Refactor" },

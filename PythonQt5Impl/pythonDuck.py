@@ -44,7 +44,7 @@ class RuntimeContext():
 # HACK! parse the path(s) from the args
 
 # filename = sys.argv[1]
-modelPath = "../Models/BabyDuck.json"
+modelPath = "../Models/NewDuck.json"
 with open(modelPath, 'r') as modelData:
     appModel = json.load(modelData)
 

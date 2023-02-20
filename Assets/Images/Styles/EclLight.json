@@ -35,10 +35,21 @@
     },
     "Menu Item": {
        "srcX": 200, "srcY": 50, "srcW": 48, "srcH": 48,
+       "lm": 5, "tm": 1, "rm": 7, "bm": 1,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "labelGap": 3,
+       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "layout": "label",
+       "renderer": "Label Renderer"
+    },
+    "Main Menu Item": {
+       "srcX": 200, "srcY": 50, "srcW": 48, "srcH": 48,
        "lm": 8, "tm": 1, "rm": 5, "bm": 1,
        "lw": 0, "th": 0, "rw": 0, "bh": 0,
 
        "labelGap": 3,
+       "LeftClickAction": "Show DropDown",
        "fontSpec": "color: black; font-family: Arial; font-size: 9;",
        "layout": "label",
        "renderer": "Label Renderer"
