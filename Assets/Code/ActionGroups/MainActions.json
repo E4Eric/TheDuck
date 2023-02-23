@@ -1,8 +1,0 @@
-{
-  "name": "Menu Actions",
-  "actions": [
-    { "name": "Echo Action", "codePath": "echoAction" },
-    { "name": "Show DropDown", "codePath": "showDropDown" },
-    { "name": "Show SubMenu", "codePath": "showSubMenu" }
-  ]
-}

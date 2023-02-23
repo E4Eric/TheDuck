@@ -58,10 +58,11 @@ def clearTooltip(ctx):
 ## Menu Handling
 ################################################
 def clearSubMenus(ctx):
-    global openSubMenus
+    global openSubMenus, mainMenuItem
     for layerName in reversed(openSubMenus):
         ctx.displayManager.removeLayer(layerName)
     openSubMenus.clear()
+    mainMenuItem = None
 
 def showMenu(ctx, me, x, y):
     global openSubMenus, highlightME
@@ -130,9 +131,12 @@ def lclick(ctx, me, x, y):
     if 'Main Menu Item' in style and 'submenu' in me:
         if me == mainMenuItem:
             clearSubMenus(ctx)
-            mainMenuItem = None
         else:
             showDropDown(ctx, me)
+
+    # HACK!! this test is too generic...
+    if 'Menu' not in style:
+        clearSubMenus(ctx)
 
     if 'lclickAction' in me:
         actionModule = ctx.assetManager.getAction(me['lclickAction'])

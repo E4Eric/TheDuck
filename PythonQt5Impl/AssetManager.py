@@ -10,6 +10,16 @@ class AssetManager():
         self.ctx = ctx
         self.loadAssets(ctx.appModel['assetDir'])
 
+    def loadModules(self, srcDir, moduleCache):
+        sys.path.append(srcDir)
+        for subdir, dirs, files in os.walk(srcDir):
+            for file in files:
+                if (file.endswith('.py')):
+                    moduleName = file.rstrip('.py')
+                    module = importlib.import_module(moduleName)
+                    moduleCache[moduleName] = module
+                    print(f'   ...{moduleName}')
+
     def getJsonData(self, srcDir):
         print(srcDir)
 
@@ -104,14 +114,8 @@ class AssetManager():
                     print("loaded Icon: ", iconPath)
 
     def loadLayouts(self, layoutsDir):
-        layoutData = self.getJsonData(layoutsDir)
-        sys.path.append(layoutsDir)
-        for layout in layoutData:
-            self.layoutCache[layout['name']] = layout
-            print("loaded Layout: ", layout['name'])
-            cp = layout['codePath']
-            code = importlib.import_module(cp)
-            self.layoutCodeCache[layout['name']] = code
+        print(" *** Load Layouts ***")
+        self.loadModules(layoutsDir, self.layoutCodeCache)
 
     def getLayout(self, layoutName):
         return self.layoutCodeCache[layoutName]
@@ -121,27 +125,15 @@ class AssetManager():
         return code.layout(self.ctx, available, me)
 
     def loadRenderers(self, renderersDir):
-        rendererData = self.getJsonData(renderersDir)
-        sys.path.append(renderersDir)
-        for renderer in rendererData:
-            self.rendererCache[renderer['name']] = renderer
-            print("loaded Renderer: ", renderer['name'])
-            cp = renderer['codePath']
-            code = importlib.import_module(cp)
-            self.rendererCodeCache[renderer['name']] = code
+        print(" *** Load Renderers ***")
+        self.loadModules(renderersDir, self.rendererCodeCache)
 
     def getRenderer(self, rendererName):
         return self.rendererCodeCache[rendererName]
 
     def loadControllers(self, controllersDir):
-        controllerData = self.getJsonData(controllersDir)
-        sys.path.append(controllersDir)
-        for controller in controllerData:
-            self.controllerCache[controller['name']] = controller
-            print("loaded Controller: ", controller['name'])
-            cp = controller['codePath']
-            code = importlib.import_module(cp)
-            self.controllerCodeCache[controller['name']] = code
+        print(" *** Load Controllers ***")
+        self.loadModules(controllersDir, self.controllerCodeCache)
 
     def getController(self, controllerName):
         module = self.controllerCodeCache[controllerName]
@@ -152,15 +144,8 @@ class AssetManager():
         code.draw(self.ctx, me)
 
     def loadActions(self, actionsDir):
-        actionGroups = self.getJsonData(actionsDir)
-        sys.path.append(actionsDir)
-        for actionGroup in actionGroups:
-            print(actionGroup['name'])
-            for action in actionGroup['actions']:
-                cp = action['codePath']
-                code = importlib.import_module(cp)
-                self.actionCodeCache[action['name']] = code
-                print("  loaded action: ", action['name'])
+        print(" *** Load Actions ***")
+        self.loadModules(actionsDir, self.actionCodeCache)
 
     def getAction(self, actionName):
         return self.actionCodeCache[actionName]
@@ -229,19 +214,16 @@ class AssetManager():
             self.loadIconSets(iconsDir)
 
         # Code-based assets
-        self.layoutCache = {}
         self.layoutCodeCache = {}
         layoutsDir = assetDir + "/Code/Layouts"
         if os.path.isdir(layoutsDir):
             self.loadLayouts(layoutsDir)
 
-        self.rendererCache = {}
         self.rendererCodeCache = {}
         rendererssDir = assetDir + "/Code/Renderers"
         if os.path.isdir(rendererssDir):
             self.loadRenderers(rendererssDir)
 
-        self.controllerCache = {}
         self.controllerCodeCache = {}
         controllersDir = assetDir + "/Code/controllers"
         if os.path.isdir(controllersDir):
