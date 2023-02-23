@@ -4,6 +4,7 @@
 
   "assetDir": "../Assets",
   "curStyleSheet": "New Light",
+  "curController": "IDE Controller",
   "style": "App Canvas",
   "percentage": 100,
   "side": "top",
@@ -11,9 +12,22 @@
     { "style": "Main Menu", "contents": [
         { "style": "Main Menu Item", "label": "File",  "submenu":
           { "style": "Menu", "contents": [
-            { "style": "Menu Item", "label": "Sub Menu Item 1"},
-            { "style": "Menu Item", "label": "Sub Menu Item 2"},
-            { "style": "Menu Item", "label": "Sub Menu Item 3"}
+            { "style": "Menu Item", "label": "Sub Menu Item 1", "lclickAction": "Echo Action" },
+            { "style": "Menu Item", "label": "Sub Menu Item 2", "lclickAction": "Echo Action" },
+            { "style": "Menu Item", "label": "Sub Menu Item 3", "lclickAction": "Echo Action" }
+          ]}
+        },
+        { "style": "Main Menu Item", "label": "Edit",  "submenu":
+          { "style": "Menu", "contents": [
+            { "style": "Menu Item", "label": "Cut"},
+            { "style": "Menu Item", "label": "Copy", "submenu":
+              { "style": "Menu", "contents": [
+                { "style": "Menu Item", "label": "Sub Menu Item 1", "lclickAction": "Echo Action" },
+                { "style": "Menu Item", "label": "Sub Menu Item 2", "lclickAction": "Echo Action" },
+                { "style": "Menu Item", "label": "Sub Menu Item 3", "lclickAction": "Echo Action" }
+              ]}
+            },
+            { "style": "Menu Item", "label": "Paste"}
           ]}
         },
         { "style": "Main Menu Item", "label": "Edit" },
@@ -26,6 +40,15 @@
         { "style": "Main Menu Item", "label": "Window" },
         { "style": "Main Menu Item", "label": "Help" }
       ]
+    },
+    { "style": "Trim", "contents": [
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Drop to Frame", "tooltip": "Test Tooltip", "lclickAction": "Echo Action" },
+          { "style": "Tool Item", "icon": "Use Step Filters", "tooltip": "Save", "lclickAction": "Echo Action" },
+          { "style": "Tool Item", "icon": "Open Web Browser", "tooltip": "Save All", "lclickAction": "Echo Action" }
+        ]
+      }
+    ]
     }
   ]
 }

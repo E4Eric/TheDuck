@@ -13,6 +13,39 @@ class RuntimeContext():
         self.assetManager = AssetManager.AssetManager(self)
         self.displayManager = DisplayManager.DisplayManager(self)
         self.eventProxy = UIEventProxy.UIEventProxy(self)
+        self.curController = self.assetManager.getController(self.appModel['curController'])
+
+    def enter(self, me):
+        if self.curController != None:
+            if hasattr(self.curController, 'enter'):
+                self.curController.enter(self, me)
+
+    def leave(self, me):
+        if self.curController != None:
+            if hasattr(self.curController, 'leave'):
+                self.curController.leave(self, me)
+    def hover(self, me):
+        if self.curController != None:
+            if hasattr(self.curController, 'hover'):
+                self.curController.hover(self, me)
+    def mouseMove(self,me,  x, y):
+        if self.curController != None:
+            if hasattr(self.curController, 'mouseMove'):
+                self.curController.enter(self, me, x, y)
+
+    def lclick(self, me, x, y):
+        print("lclick", x, y)
+
+        if self.curController != None:
+            if hasattr(self.curController, 'lclick'):
+                self.curController.lclick(self, me, x, y)
+
+    def rclick(self, me, x, y):
+        print("rclick", x, y)
+
+        if self.curController != None:
+            if hasattr(self.curController, 'rclick'):
+                self.curController.rclick(self, me, x, y)
 
     def layout(self, available, me):
         start = time.perf_counter()

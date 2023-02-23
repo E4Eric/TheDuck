@@ -1,7 +1,7 @@
 {
   "name": "Menu Actions",
   "actions": [
-    { "name": "Show Tooltip", "codePath": "showTooltip" },
+    { "name": "Echo Action", "codePath": "echoAction" },
     { "name": "Show DropDown", "codePath": "showDropDown" },
     { "name": "Show SubMenu", "codePath": "showSubMenu" }
   ]

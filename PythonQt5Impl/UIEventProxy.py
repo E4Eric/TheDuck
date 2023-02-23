@@ -46,32 +46,16 @@ class UIEventProxy():
         print(str)
 
     def enter(self, me):
-        print('enter')
-
-        # cache the Controller
-        sd = self.ctx.assetManager.getStyleData(me['style'])
-        if 'controller' in sd:
-            controllerModule = self.ctx.assetManager.getController(sd['controller'])
-            self.curController = controllerModule
-
-        if self.curController != None:
-            if hasattr(self.curController, 'enter'):
-                self.curController.enter(self.ctx, self.curElement)
+        if me != None:
+            self.ctx.enter(me)
 
     def leave(self, me):
-        if self.curController != None:
-            if hasattr(self.curController, 'leave'):
-                self.curController.leave(self.ctx, self.curElement)
-
-        # HACK!! auto remove any tooltip
-        self.ctx.displayManager.removeLayer('tooltip')
+        if me != None:
+            self.ctx.leave(me)
 
     def hover(self):
-        print('hover')
-        if 'hoverAction' in self.curElement:
-            action = self.ctx.assetManager.getAction(self.curElement['hoverAction'])
-            if action.canExecute(self.ctx, self.curElement):
-                action.execute(self.ctx, self.curElement)
+        if (self.curElement != None):
+            self.ctx.hover(self.curElement)
 
     def setCurElement(self, newcurElement):
         if (newcurElement == self.curElement):
@@ -98,7 +82,10 @@ class UIEventProxy():
         self.timer = threading.Timer(0.3, timeout)
         self.timer.start()
 
-    def handleLClick(self):
+        self.ctx.mouseMove(self.curElement, x, y)
+
+    def lclick(self):
+        self.ctx.lclick(self.curElement, self.mouseX, self.mouseY)
         if self.curController != None:
             if hasattr(self.curController, 'lclick'):
                 self.curController.lclick(self.ctx, self.curElement)
@@ -111,7 +98,7 @@ class UIEventProxy():
 
         self.lButton = button == 'left'
         if button == 'left':
-            self.handleLClick()
+            self.lclick()
 
     def mouseReleaseEvent(self, button):
         print(button, " released !")

@@ -8,7 +8,7 @@ def draw(ctx, me):
     y = me['drawRect'].y + sd['th'] + sd['tm']
 
     if 'icon' in me:
-        icon = ctx.getIconImage(me['icon'])
+        icon = ctx.assetManager.getIconImage(me['icon'])
         ctx.window.drawIcon(x, y, icon)
         x += ctx.window.getImageWidth(icon)
         if 'label' in me:

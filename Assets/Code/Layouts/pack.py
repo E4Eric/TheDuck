@@ -9,9 +9,7 @@ def hpack(ctx, available, me):
     # reserve space now to get positioning correct
     kidAvailable = ctx.assetManager.adjustAvailableForStyle(me, available)
     for kid in me['contents']:
-        ctx.assetManager.layout(kidAvailable, kid)
-        kidAvailable.x += kid['drawRect'].w
-        kidAvailable.w -= kid['drawRect'].w
+        kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
         totalWidth += kid['drawRect'].w
         maxHeight = max(maxHeight, kid['drawRect'].h)
 
@@ -32,10 +30,7 @@ def vpack(ctx, available, me):
     # reserve space now to get positioning correct
     kidAvailable = ctx.assetManager.adjustAvailableForStyle(me, available)
     for kid in me['contents']:
-        kidCopy = copy.copy(kidAvailable)
-        ctx.assetManager.layout(kidCopy, kid)
-        kidAvailable.y += kid['drawRect'].h
-        kidAvailable.h -= kid['drawRect'].h
+        kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
         totalHeight += kid['drawRect'].h
         maxWidth = max(maxWidth, kid['drawRect'].w)
 

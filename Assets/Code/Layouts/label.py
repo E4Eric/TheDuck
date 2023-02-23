@@ -4,7 +4,8 @@ import copy
 def layout(ctx, available, me):
     dr = copy.copy(available)
 
-    sd = ctx.assetManager.getStyleData(me['style'])
+    style = me['style']
+    sd = ctx.assetManager.getStyleData(style)
     side = sd['side']
 
     labelGap = 0

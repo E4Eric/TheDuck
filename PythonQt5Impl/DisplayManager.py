@@ -6,7 +6,6 @@ class DisplayManager():
         self.layers = {}
 
     def addLayer(self, name, me):
-        print(f'Add Layer: {name}')
         self.layers[name] = me
 
         # force an update
@@ -14,7 +13,6 @@ class DisplayManager():
         self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
 
     def removeLayer(self, name):
-        print('remove Layer: ', name)
         if name in self.layers:
             tooltipME = self.layers[name]
             dr = tooltipME['drawRect']
@@ -73,7 +71,8 @@ class DisplayManager():
         if 'contents' in me:
             for kid in me['contents']:
                 self.drawModelElement(kid)
-    def pick(self, me, x ,y):
+
+    def pickElement(self, me, x, y):
         if 'drawRect' not in me:
             return None
 
@@ -90,7 +89,17 @@ class DisplayManager():
         # drill down
         if 'contents' in me:
             for kid in me['contents']:
-                found = self.pick(kid, x,y)
+                found = self.pickElement(kid, x,y)
                 if found != None:
                     return found
         return me
+
+    def pick(self, me, x ,y):
+        # Check layers
+        for layer in self.layers:
+            picked = self.pickElement(self.layers[layer], x, y)
+            if picked != None:
+                return picked
+
+        # now check the display structure
+        return self.pickElement(me, x, y)

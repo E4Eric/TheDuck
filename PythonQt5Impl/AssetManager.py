@@ -144,7 +144,8 @@ class AssetManager():
             self.controllerCodeCache[controller['name']] = code
 
     def getController(self, controllerName):
-        return self.controllerCodeCache[controllerName]
+        module = self.controllerCodeCache[controllerName]
+        return module
 
     def draw(self, rendererName, me):
         code = self.rendererCodeCache[rendererName]
