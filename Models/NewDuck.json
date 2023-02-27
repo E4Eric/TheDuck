@@ -55,6 +55,12 @@
     ]},
     { "style":  "Panel (bottom)", "size":  300, "side":  "bottom", "dragController": "PanelSizer","dragWidth": 5, "contents": [
       { "style": "Part", "partName": "File Explorer" }
+    ]},
+    { "style":  "Panel (right)", "size":  200, "side":  "right", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+      { "style": "Part", "partName": "File Explorer" }
+    ]},
+    { "style":  "Panel (top)", "size":  200, "side":  "top", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+      { "style": "Part", "partName": "File Explorer" }
     ]}
   ]
 }

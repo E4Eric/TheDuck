@@ -183,6 +183,22 @@
 
        "layout": "panel",
        "renderer": "frame"
+    },
+    "Panel (right)": {
+       "srcX": 200, "srcY": 1000, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 10, "th": 0, "rw": 0, "bh": 0,
+
+       "layout": "panel",
+       "renderer": "frame"
+    },
+    "Panel (top)": {
+       "srcX": 200, "srcY": 1050, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 10,
+
+       "layout": "panel",
+       "renderer": "frame"
     }
   }
 }

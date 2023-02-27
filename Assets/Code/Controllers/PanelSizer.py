@@ -62,6 +62,25 @@ def setDragState(ctx, me, x, y):
             print('Cursor: Default')
             ctx.window.setPointer("Default")
 
+    if panelSide == 'right':
+        # Hack-ish...the style is expected to whow an affordance
+        if x >= dr.x and x <= (dr.x + sd['lw']):
+            okToDrag = True
+            ctx.window.setPointer("EW")
+        else:
+            print('Cursor: Default')
+            ctx.window.setPointer("Default")
+
+    if panelSide == 'top':
+        # Hack-ish...the style is expected to whow an affordance
+        maxY = dr.y + dr.h
+        if y >= (maxY - sd['bh']) and y <= maxY:
+            okToDrag = True
+            ctx.window.setPointer("NS")
+        else:
+            print('Cursor: Default')
+            ctx.window.setPointer("Default")
+
 def enter(ctx, me, x, y):
     global panel, panelSide, sd
 
@@ -93,6 +112,16 @@ def dragMove(ctx, panel, x, y):
     if panelSide == 'bottom':
         dy = y - trackY
         panel['size'] -= dy
+        ctx.displayManager.refresh()
+
+    if panelSide == 'right':
+        dx = x - trackX
+        panel['size'] -= dx
+        ctx.displayManager.refresh()
+
+    if panelSide == 'top':
+        dy = y - trackY
+        panel['size'] += dy
         ctx.displayManager.refresh()
 
     trackX = x
