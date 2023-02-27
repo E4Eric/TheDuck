@@ -168,12 +168,19 @@
        "layout": "partLayout",
        "renderer": "partRenderer"
     },
-    "Panel": {
-       "srcX": 200, "srcY": 850, "srcW": 48, "srcH": 48,
+    "Panel (left)": {
+       "srcX": 200, "srcY": 900, "srcW": 48, "srcH": 48,
        "lm": 0, "tm": 0, "rm": 0, "bm": 0,
-       "lw": 0, "th": 0, "rw": 5, "bh": 0,
+       "lw": 0, "th": 0, "rw": 10, "bh": 0,
 
-       "percentage": 35,
+       "layout": "panel",
+       "renderer": "frame"
+    },
+    "Panel (bottom)": {
+       "srcX": 200, "srcY": 950, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 10, "rw": 0, "bh": 0,
+
        "layout": "panel",
        "renderer": "frame"
     }
