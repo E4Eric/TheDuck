@@ -49,6 +49,9 @@
         ]
       }
     ]
-    }
+    },
+    { "style":  "Panel", "size":  300, "side":  "left", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+      { "style": "Part", "partName": "File Explorer" }
+    ]}
   ]
 }

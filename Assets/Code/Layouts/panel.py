@@ -2,33 +2,36 @@ import copy
 
 
 def layout(ctx, available, me):
-    pct = me['percentage'] / 100
     side = me['side']
+    if 'size' in me:
+        size = me['size']
+    if 'percentage' in me:
+        if side == 'top' or side == 'bottom':
+            size = (me['percentage'] / 100.0) * available.h
+        else:
+            size = (me['percentage'] / 100.0) * available.w
 
     # first layout on top
     me['drawRect'] = copy.copy(available)
-
-    height = int(available.h * pct + 0.5)
-    width = int(available.w * pct + 0.5)
     if side == 'top':
-        me['drawRect'].h = height
-        available.y += height
-        available.h -= height
+        me['drawRect'].h = size
+        available.y += size
+        available.h -= size
 
     if side == 'bottom':
-        me['drawRect'].y = (available.y + available.h) - height
-        me['drawRect'].h = height
-        available.h -= height
+        me['drawRect'].y = (available.y + available.h) - size
+        me['drawRect'].h = size
+        available.h -= size
 
     if side == 'left':
-        me['drawRect'].w = width
-        available.x += width
-        available.w -= width
+        me['drawRect'].w = size
+        available.x += size
+        available.w -= size
 
     if side == 'right':
-        me['drawRect'].x = (available.x + available.w) - width
-        me['drawRect'].w = width
-        available.w -= width
+        me['drawRect'].x = (available.x + available.w) - size
+        me['drawRect'].w = size
+        available.w -= size
 
     # drawRect set...layout the kids inside me
     # grab room for the style first since we layout inside us...

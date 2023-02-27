@@ -7,6 +7,9 @@ highlightME = None
 mainMenuItem = None
 openSubMenus = []
 
+# Drag support
+dragController = None
+
 ################################################
 ## Highlight Handling
 ################################################
@@ -110,8 +113,8 @@ def showSubMenu(ctx, me):
     dr = me['drawRect']
     showMenu(ctx, me, dr.x + dr.w - 2, dr.y - 2)
 
-def enter(ctx, me):
-    global mainMenuItem
+def enter(ctx, me, x ,y):
+    global mainMenuItem, dragController
 
     # Hightlight handling...if the style has a ' (Over)' defined switchto it
     highlightElement(ctx, me)
@@ -120,9 +123,24 @@ def enter(ctx, me):
     if mainMenuItem != None and 'Main Menu Item' in me['style'] and me != mainMenuItem:
         showDropDown(ctx, me)
 
+    if 'dragController' in me:
+        dragController = ctx.assetManager.getController(me['dragController'])
+        dragController.enter(ctx, me, x, y)
+
 def leave(ctx, me):
+    global dragController
+    if dragController != None:
+        if not dragController.isDragging():
+            dragController.leave(ctx, me)
+            dragController = None
+
     clearHighlight(ctx)
     clearTooltip(ctx)
+
+def mouseMove(ctx, me, x, y):
+    global dragController
+    if dragController != None:
+        dragController.mouseMove(ctx, me, x, y)
 
 
 def lclick(ctx, me, x, y):
@@ -138,6 +156,7 @@ def lclick(ctx, me, x, y):
     if 'Menu' not in style:
         clearSubMenus(ctx)
 
+    # Execute meu / toolbar actions
     if 'lclickAction' in me:
         actionModule = ctx.assetManager.getAction(me['lclickAction'])
         if actionModule.canExecute(ctx, me):
@@ -149,3 +168,9 @@ def hover(ctx, me):
         if 'Main Menu Item' not in me['style'] and 'submenu' in me:
             showSubMenu(ctx, me)
 
+def mouseButtonPressed(ctx, button, x, y):
+    if dragController != None:
+        dragController.mouseButtonPressed(ctx, button, x, y)
+def mouseButtonReleased(ctx, button, x, y):
+    if dragController != None:
+        dragController.mouseButtonReleased(ctx, button, x, y)

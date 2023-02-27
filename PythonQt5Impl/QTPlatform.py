@@ -3,7 +3,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QRect
-from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter
+from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter, QCursor
+
 
 class R():
     def __init__(self, x,y,w,h):
@@ -132,6 +133,16 @@ class QTPlatform(QtWidgets.QWidget):
 
     def crop(self, srcMap, x, y, w, h):
         return srcMap.copy(QRect(x, y, w, h))
+
+    def setPointer(self, pointerName):
+        if pointerName == 'Move':
+            self.setCursor(QCursor(Qt.PointingHandCursor))
+        elif pointerName == 'NS':
+            self.setCursor(QCursor(Qt.SizeVerCursor))
+        elif pointerName == 'EW':
+            self.setCursor(QCursor(Qt.SizeHorCursor))
+        else:
+            self.setCursor(QCursor(Qt.ArrowCursor))
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_D:

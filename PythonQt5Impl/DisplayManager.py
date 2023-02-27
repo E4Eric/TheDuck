@@ -72,6 +72,11 @@ class DisplayManager():
             for kid in me['contents']:
                 self.drawModelElement(kid)
 
+    def refresh(self):
+        available = self.ctx.appModel['drawRect']
+        self.layoutModel(available)
+        self.ctx.window.forceUpdate(0, 0, 0, 0)
+
     def pickElement(self, me, x, y):
         if 'drawRect' not in me:
             return None

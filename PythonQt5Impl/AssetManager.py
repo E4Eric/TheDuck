@@ -156,12 +156,11 @@ class AssetManager():
             code.execute(self.ctx, me)
 
     def loadParts(self, partsDir):
-        partsLists = self.getJsonData(partsDir)
-        for partList in partsLists:
-            for part in partList['parts']:
-                partData = partList['parts'][part]
-                self.partsCache[partData['label']] = partData
-                print("Loaded Part: ", partData['label'])
+        print(" *** Load Parts ***")
+        self.loadModules(partsDir, self.partCodeCache)
+
+    def getPart(self, moduleName):
+        return self.partCodeCache[moduleName]
 
     def layout(self, available, me):
         sd = self.getStyleData((me['style']))
@@ -234,7 +233,7 @@ class AssetManager():
         if os.path.isdir(actionsDir):
             self.loadActions(actionsDir)
 
-        self.partsCache = {}
+        self.partCodeCache = {}
         partsDir = assetDir + "/Code/Parts"
         if os.path.isdir(partsDir):
             self.loadParts(partsDir)

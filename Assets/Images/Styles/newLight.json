@@ -159,6 +159,23 @@
         "side": "top",
        "layout": "label",
        "renderer": "Label Renderer"
+    },
+    "Part": {
+       "srcX": 200, "srcY": 850, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+       "layout": "partLayout",
+       "renderer": "partRenderer"
+    },
+    "Panel": {
+       "srcX": 200, "srcY": 850, "srcW": 48, "srcH": 48,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 5, "bh": 0,
+
+       "percentage": 35,
+       "layout": "panel",
+       "renderer": "frame"
     }
   }
 }
