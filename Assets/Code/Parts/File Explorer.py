@@ -9,6 +9,7 @@ def createPart(ctx, me):
 
     # Create a tree view
     tree_view = QTreeView(ctx.window)
+
     tree_view.setRootIsDecorated(False)
     tree_view.setAlternatingRowColors(True)
 

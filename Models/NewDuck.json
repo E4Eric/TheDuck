@@ -57,13 +57,13 @@
       { "style": "Part", "partName": "File Explorer" }
     ]},
     { "style":  "Panel (right)", "size":  200, "side":  "right", "dragController": "PanelSizer","dragWidth": 5, "contents": [
-      { "style": "Part", "partName": "File Explorer" }
+      { "style": "Part", "partName": "Dial" }
     ]},
-    { "style":  "Panel (top)", "size":  200, "side":  "top", "dragController": "PanelSizer","dragWidth": 5, "contents": [
-      { "style": "Part", "partName": "File Explorer" }
+    { "style":  "Panel (none)", "size":  40, "side":  "top", "contents": [
+      { "style": "Part", "partName": "Slider" }
     ]},
     { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [
-      { "style": "Part", "partName": "File Explorer" }
+      { "style": "Part", "partName": "Text Editor" }
     ]}
   ]
 }

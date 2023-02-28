@@ -1,7 +1,7 @@
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter, QCursor
 
