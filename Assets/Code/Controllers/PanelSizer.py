@@ -107,22 +107,22 @@ def dragMove(ctx, panel, x, y):
     if panelSide == 'left':
         dx = x - trackX
         panel['size'] += dx
-        ctx.displayManager.refresh()
 
     if panelSide == 'bottom':
         dy = y - trackY
         panel['size'] -= dy
-        ctx.displayManager.refresh()
 
     if panelSide == 'right':
         dx = x - trackX
         panel['size'] -= dx
-        ctx.displayManager.refresh()
 
     if panelSide == 'top':
         dy = y - trackY
         panel['size'] += dy
-        ctx.displayManager.refresh()
+
+    if panel['size'] < 10:
+        panel['size'] = 10
+    ctx.displayManager.refresh()
 
     trackX = x
     trackY = y
