@@ -5,30 +5,28 @@ def layout(ctx, available, me):
     side = me['side']
     if 'size' in me:
         size = me['size']
-    if 'percentage' in me:
-        if side == 'top' or side == 'bottom':
-            size = (me['percentage'] / 100.0) * available.h
-        else:
-            size = (me['percentage'] / 100.0) * available.w
 
     # first layout on top
     me['drawRect'] = copy.copy(available)
-    if side == 'top':
+
+    # '-1' means take it all
+    if size == -1:
+        available.w = 0
+        available.h = 0
+    elif side == 'top':
         me['drawRect'].h = size
         available.y += size
         available.h -= size
 
-    if side == 'bottom':
+    elif side == 'bottom':
         me['drawRect'].y = (available.y + available.h) - size
         me['drawRect'].h = size
         available.h -= size
-
-    if side == 'left':
+    elif side == 'left':
         me['drawRect'].w = size
         available.x += size
         available.w -= size
-
-    if side == 'right':
+    elif side == 'right':
         me['drawRect'].x = (available.x + available.w) - size
         me['drawRect'].w = size
         available.w -= size

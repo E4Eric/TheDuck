@@ -6,7 +6,7 @@
   "curStyleSheet": "New Light",
   "curController": "IDE Controller",
   "style": "App Canvas",
-  "percentage": 100,
+  "size": -1,
   "side": "top",
   "contents": [
     { "style": "Main Menu", "contents": [
@@ -60,6 +60,9 @@
       { "style": "Part", "partName": "File Explorer" }
     ]},
     { "style":  "Panel (top)", "size":  200, "side":  "top", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+      { "style": "Part", "partName": "File Explorer" }
+    ]},
+    { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [
       { "style": "Part", "partName": "File Explorer" }
     ]}
   ]
