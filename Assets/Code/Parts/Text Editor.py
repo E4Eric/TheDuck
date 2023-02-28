@@ -11,7 +11,7 @@ def createPart(ctx, me):
     widget = QTextEdit(ctx.window)
 
     # Get the path of the selected file
-    file_path = "C:\\Users\\Eric Moffatt\\ducktest\\TheDuck\\Models\\NewDuck.json"
+    file_path = "..\\Models\\NewDuck.json"
 
     # Load the contents of the file into the code editor
     with open(file_path, 'r') as f:
