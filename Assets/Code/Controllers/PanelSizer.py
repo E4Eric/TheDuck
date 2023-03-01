@@ -103,25 +103,23 @@ def dragStart(ctx, panel, x, y):
     dragMove(ctx, panel, x, y)
 
 def dragMove(ctx, panel, x, y):
-    global trackX, trackY
-    if panelSide == 'left':
-        dx = x - trackX
-        panel['size'] += dx
+    global trackX, trackY, panelSide
+    panelRect = panel['drawRect']
 
-    if panelSide == 'bottom':
-        dy = y - trackY
-        panel['size'] -= dy
+    boundingRect = ctx.appModel['drawRect']
+    if (boundingRect.x + boundingRect.w) - x < 10: x = (boundingRect.x + boundingRect.w) -10
+    if y - boundingRect.y < 10: y = 10
+    if (boundingRect.y + boundingRect.h) - y < 10: y = (boundingRect.y + boundingRect.h) -10
 
-    if panelSide == 'right':
-        dx = x - trackX
-        panel['size'] -= dx
+    if panelSide == 'left': size = x - panelRect.x
+    elif panelSide == 'bottom': size = (panelRect.y + panelRect.h) - y
+    elif panelSide == 'right': size = (panelRect.x + panelRect.w) - x
+    elif panelSide == 'top': size = y - panelRect.y
 
-    if panelSide == 'top':
-        dy = y - trackY
-        panel['size'] += dy
+    if size < 10:
+        size = 10
+    panel['size'] = size
 
-    if panel['size'] < 10:
-        panel['size'] = 10
     ctx.displayManager.refresh()
 
     trackX = x

@@ -8,17 +8,25 @@ import sys
 class AssetManager():
     def __init__(self, ctx):
         self.ctx = ctx
+        self.lineCount = 0
         self.loadAssets(ctx.appModel['assetDir'])
+
+    def countLines(self, file, srcDir):
+        filePath = srcDir + '/' + file
+        with open(filePath, 'r') as fp:
+            nlines = len(fp.readlines())
+            return nlines
 
     def loadModules(self, srcDir, moduleCache):
         sys.path.append(srcDir)
         for subdir, dirs, files in os.walk(srcDir):
             for file in files:
                 if (file.endswith('.py')):
+                    lineCount = self.countLines(file, srcDir)
                     moduleName = file.rstrip('.py')
                     module = importlib.import_module(moduleName)
                     moduleCache[moduleName] = module
-                    print(f'   ...{moduleName}')
+                    print(f'   ...{moduleName}: {lineCount}')
 
     def getJsonData(self, srcDir):
         print(srcDir)

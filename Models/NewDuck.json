@@ -59,7 +59,7 @@
     { "style":  "Panel (right)", "size":  200, "side":  "right", "dragController": "PanelSizer","dragWidth": 5, "contents": [
       { "style": "Part", "partName": "Dial" }
     ]},
-    { "style":  "Panel (none)", "size":  40, "side":  "top", "contents": [
+    { "style":  "Panel (top)", "size":  40, "side":  "top", "dragController": "PanelSizer", "contents": [
       { "style": "Part", "partName": "Slider" }
     ]},
     { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [

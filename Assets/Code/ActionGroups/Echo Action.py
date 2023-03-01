@@ -6,4 +6,4 @@ def canExecute(ctx, me):
 
 def execute(ctx, me):
     action = me['lclickAction']
-    print(f'** executing "{action}"')
+    print(f'** executing "{action}" ')
