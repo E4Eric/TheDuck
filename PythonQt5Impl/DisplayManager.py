@@ -37,7 +37,7 @@ class DisplayManager():
         start = time.perf_counter()
         available = self.layout(available, self.ctx.appModel)
         end = time.perf_counter()
-        print('Layout Model: ', end - start)
+        # print('Layout Model: ', end - start)
 
     def layout(self, available, me):
         layout = self.getLayoutCode(me)
@@ -53,7 +53,7 @@ class DisplayManager():
             self.drawModelElement(self.layers[layer])
 
         end = time.perf_counter()
-        print('Draw: ', end - start)
+        # print('Draw: ', end - start)
 
 
     def drawModelElement(self, me):

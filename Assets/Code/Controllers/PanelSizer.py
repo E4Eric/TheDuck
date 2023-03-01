@@ -15,7 +15,6 @@ trackY = None
 
 def resetGlobals():
     global panel, sd, panelSide, okToDrag, dragging, downX, downY, trackX, trackY
-    print("reset globals")
 
     panel = None
     sd = None
@@ -32,11 +31,9 @@ def resetGlobals():
 def setDragging(val):
     global dragging
     dragging = val
-    print(f'setDragging: {dragging}')
 
 def isDragging():
     global dragging
-    print(f'isDragging: {dragging}')
     return dragging
 
 def setDragState(ctx, me, x, y):
@@ -50,7 +47,6 @@ def setDragState(ctx, me, x, y):
             okToDrag = True
             ctx.window.setPointer("EW")
         else:
-            print('Cursor: Default')
             ctx.window.setPointer("Default")
 
     if panelSide == 'bottom':
@@ -59,7 +55,6 @@ def setDragState(ctx, me, x, y):
             okToDrag = True
             ctx.window.setPointer("NS")
         else:
-            print('Cursor: Default')
             ctx.window.setPointer("Default")
 
     if panelSide == 'right':
@@ -68,7 +63,6 @@ def setDragState(ctx, me, x, y):
             okToDrag = True
             ctx.window.setPointer("EW")
         else:
-            print('Cursor: Default')
             ctx.window.setPointer("Default")
 
     if panelSide == 'top':
@@ -78,7 +72,6 @@ def setDragState(ctx, me, x, y):
             okToDrag = True
             ctx.window.setPointer("NS")
         else:
-            print('Cursor: Default')
             ctx.window.setPointer("Default")
 
 def enter(ctx, me, x, y):
@@ -95,7 +88,7 @@ def leave(ctx, me):
 
 def dragStart(ctx, panel, x, y):
     global trackX, trackY
-    print('*** Drag Start ***')
+
     setDragging(True)
     trackX = x
     trackY = y

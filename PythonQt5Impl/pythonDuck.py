@@ -16,6 +16,7 @@ class RuntimeContext():
         self.curController = self.assetManager.getController(self.appModel['curController'])
         self.eventProxy = UIEventProxy.UIEventProxy(self, self.curController)
 
+        self.partRegistry = {}
         # We have everything we need, start it up
         self.run()
 
@@ -23,30 +24,17 @@ class RuntimeContext():
         self.window.show()
         sys.exit(self.app.exec_())
 
-    def layout(self, available, me):
-        start = time.perf_counter()
-        available = self.displayManager.layout(available, me)
-        end = time.perf_counter()
-        print('Layout: ', end - start)
-        return available
-
-    def drawModelElement(self, me):
-        start = time.perf_counter()
-        self.assetManager.drawModelElement(me)
-        end = time.perf_counter()
-        print('Drawt: ', end - start)
-
-    def setState(self, me, fieldName, newVal):
-        oldVal = me[fieldName]
-
-        # detect No-ops
-        if oldVal == newVal:
+    def registerPart(self, me, partName):
+        if 'partName' not in me:
             return
 
-        me[fieldName] = newVal
-        ctx.publishStateChange(me, fieldName, oldVal, newVal)
-    def publishStateChange(self, me, fieldName, oldVal, newVal):
-        print(f'State {fieldName} changed from {oldVal} to {newVal}')
+        partName = me['partName']
+        self.partRegistry[partName] = me
+
+    def getPart(self, partName):
+        if partName in self.partRegistry:
+            return self.partRegistry[partName]
+        return None
 
 # Load the model
 parser = argparse.ArgumentParser()

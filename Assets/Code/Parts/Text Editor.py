@@ -1,25 +1,32 @@
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QTextEdit
 
+def showFile(widget, path):
+    # Load the contents of the file into the code editor
+    with open(path, 'r') as f:
+        file_contents = f.read()
+    widget.setPlainText(file_contents)
 
 def createPart(ctx, me):
     if 'qtWidget' in me:
         return
 
-    print('create Part: ', me['partName'])
+    print('create Part: ', me['partType'])
 
     # Create the QProgressBar widget and set its orientation to vertical
     widget = QTextEdit(ctx.window)
+    font = QFont('Arial', 14)
+    widget.setFont(font)
 
     # Get the path of the selected file
-    file_path = "..\\Models\\NewDuck.json"
+    showFile(widget, "..\\Models\\NewDuck.json")
 
-    # Load the contents of the file into the code editor
-    with open(file_path, 'r') as f:
-        file_contents = f.read()
-    widget.setPlainText(file_contents)
 
     # Display the progress bar
     me['qtWidget'] = widget
+    if 'partName' in me:
+        ctx.registerPart(me, me['partName'])
+
     widget.show()
 
 

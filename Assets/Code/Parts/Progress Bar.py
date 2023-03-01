@@ -6,7 +6,7 @@ def createPart(ctx, me):
     if 'qtWidget' in me:
         return
 
-    print('create Part: ', me['partName'])
+    print('create Part: ', me['partType'])
 
     # Create the QProgressBar widget and set its orientation to vertical
     progress_bar = QProgressBar(ctx.window)

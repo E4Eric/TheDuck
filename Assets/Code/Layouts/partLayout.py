@@ -7,7 +7,7 @@ def layout(ctx, available, me):
 
     # create the part itself
     if 'qtWidget' not in me:
-        partModule = ctx.assetManager.getPart(me['partName'])
+        partModule = ctx.assetManager.getPart(me['partType'])
         partModule.createPart(ctx, me)
 
     widget = me['qtWidget']
