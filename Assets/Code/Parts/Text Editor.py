@@ -15,7 +15,7 @@ def createPart(ctx, me):
 
     # Create the QProgressBar widget and set its orientation to vertical
     widget = QTextEdit(ctx.window)
-    font = QFont('Arial', 14)
+    font = QFont('Arial', 18)
     widget.setFont(font)
 
     # Get the path of the selected file

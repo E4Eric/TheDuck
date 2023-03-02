@@ -38,13 +38,13 @@ class RuntimeContext():
 
 # Load the model
 parser = argparse.ArgumentParser()
-parser.add_argument('-model', '--model_name', type=str, required=True,
+parser.add_argument('-model', '--model_name', type=str, required=False,
                     help='Name of the model to be used')
 args = parser.parse_args()
-
 modelPath = args.model_name
-print(f"The model name is {modelPath}")
-# modelPath = "../Models/NewDuck.json"
+if modelPath == None:
+    modelPath = "../Models/NewDuck.json"
+
 with open(modelPath, 'r') as modelData:
     appModel = json.load(modelData)
 

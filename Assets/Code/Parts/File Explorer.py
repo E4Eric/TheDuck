@@ -1,7 +1,9 @@
 import os
 
 from PyQt5.QtCore import QModelIndex
-from PyQt5.QtWidgets import QTreeView, QFileSystemModel
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QTreeView, QFileSystemModel, QTextEdit
+
 
 class FileExplorer(QTreeView):
     def __init__(self, ctx, parent=None):
@@ -14,12 +16,13 @@ class FileExplorer(QTreeView):
         model = self.model()
         item_data = model.data(index)
         path = model.filePath(index)
-        if path.endswith('.py'):
+        if path.endswith('.py') or path.endswith('.json'):
             me = self.ctx.getPart("Text Editor")
             if me != None:
                 widget = me['qtWidget']
                 with open(path, 'r') as f:
                     file_contents = f.read()
+                # widget.setSyntaxHighlighter(QTextEdit.SyntaxHighlighter.Python)
                 widget.setPlainText(file_contents)
 
         else:
@@ -50,19 +53,21 @@ def createPart(ctx, me):
     print('create Part: ', me['partType'])
 
     # Create a tree view
-    tree_view = FileExplorer(ctx, ctx.window)
+    widget = FileExplorer(ctx, ctx.window)
+    font = QFont('Arial', 14)
+    widget.setFont(font)
 
-    tree_view.setRootIsDecorated(False)
-    tree_view.setAlternatingRowColors(True)
+    widget.setRootIsDecorated(False)
+    widget.setAlternatingRowColors(True)
 
     # Set the model of the tree view
     file_system_model = QFileSystemModel()
     rootPath = "../.."
     file_system_model.setRootPath(rootPath)
-    tree_view.setModel(file_system_model)
-    tree_view.setRootIndex(file_system_model.index(rootPath))
+    widget.setModel(file_system_model)
+    widget.setRootIndex(file_system_model.index(rootPath))
 
-    me['qtWidget'] = tree_view
+    me['qtWidget'] = widget
 
 
 def setFocus(ctx, me):
