@@ -47,6 +47,55 @@
           { "style": "Tool Item", "icon": "Use Step Filters", "tooltip": "Save", "lclickAction": "Echo Action" },
           { "style": "Tool Item", "icon": "Open Web Browser", "tooltip": "Save All", "lclickAction": "Echo Action" }
         ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Skip All" },
+          { "style": "Tool Item", "icon": "Resume" },
+          { "style": "Tool Item", "icon": "Suspend" },
+          { "style": "Tool Item", "icon": "Resume" },
+          { "style": "Tool Item", "icon": "Terminate" },
+          { "style": "Tool Item", "icon": "Disconnect" },
+          { "style": "Tool Item", "icon": "Step Into" },
+          { "style": "Tool Item", "icon": "Step Over" },
+          { "style": "Tool Item", "icon": "Drop to Frame" },
+          { "style": "Tool Item", "icon": "Use Step Filters" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Open Web Browser" },
+          { "style": "Tool Item", "icon": "Create a new HTML file" },
+          { "style": "Tool Item", "icon": "Create a new JavaScript file" },
+          { "style": "Tool Item", "icon": "Create a new CSS file" },
+          { "style": "Tool Item", "icon": "Search" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Debug" },
+          { "style": "Tool Item", "icon": "Run" },
+          { "style": "Tool Item", "icon": "Run Tool" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Next Annotation" },
+          { "style": "Tool Item", "icon": "Previous Annotation" },
+          { "style": "Tool Item", "icon": "Previous Edit Location" },
+          { "style": "Tool Item", "icon": "Next Edit Location" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Previous Editor" },
+          { "style": "Tool Item", "icon": "Next Editor" },
+          { "style": "Tool Item", "icon": "Pin Editor" },
+          { "style": "Tool Item", "icon": "Step Return" }
+      ]
+      },
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Open Web Browser" },
+          { "style": "Tool Item", "icon": "Create a new HTML file" },
+          { "style": "Tool Item", "icon": "Create a new JavaScript file" },
+          { "style": "Tool Item", "icon": "Create a new CSS file" },
+          { "style": "Tool Item", "icon": "Search" }
+      ]
       }
     ]
     },
