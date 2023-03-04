@@ -105,9 +105,6 @@
     { "style":  "Panel (bottom)", "size":  300, "side":  "bottom", "dragController": "PanelSizer","dragWidth": 5, "contents": [
       { "style": "Part", "partType": "File Explorer" }
     ]},
-    { "style":  "Panel (right)", "size":  200, "side":  "right", "dragController": "PanelSizer","dragWidth": 5, "contents": [
-      { "style": "Part", "partType": "Dial" }
-    ]},
     { "style":  "Panel (top)", "size":  40, "side":  "top", "dragController": "PanelSizer", "contents": [
       { "style": "Part", "partType": "Slider" }
     ]},

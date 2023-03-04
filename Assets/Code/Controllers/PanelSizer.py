@@ -39,7 +39,7 @@ def isDragging():
 def setDragState(ctx, me, x, y):
     global panel, okToDrag, panelSide, sd
 
-    dr = panel['drawRect']
+    dr = ctx.getMEData(panel, 'drawRect')
     if panelSide == 'left':
         # Hack-ish...the style is expected to whow an affordance
         maxX = dr.x + dr.w
@@ -97,9 +97,9 @@ def dragStart(ctx, panel, x, y):
 
 def dragMove(ctx, panel, x, y):
     global trackX, trackY, panelSide
-    panelRect = panel['drawRect']
+    panelRect = ctx.getMEData(panel, 'drawRect')
 
-    boundingRect = ctx.appModel['drawRect']
+    boundingRect = ctx.getMEData(ctx.appModel, 'drawRect')
     if (boundingRect.x + boundingRect.w) - x < 10: x = (boundingRect.x + boundingRect.w) -10
     if y - boundingRect.y < 10: y = 10
     if (boundingRect.y + boundingRect.h) - y < 10: y = (boundingRect.y + boundingRect.h) -10

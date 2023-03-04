@@ -1,3 +1,4 @@
+import copy
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QLabel
@@ -12,6 +13,12 @@ class R():
         self.y = y
         self.w = w
         self.h = h
+
+    def offset(self, dx, dy):
+        offsetRect = copy.copy(self)
+        offsetRect.x += dx
+        offsetRect.y += dy
+        return offsetRect
 
     def __str__(self):
         return f'({self.x},{self.y},{self.w},{self.h})'

@@ -12,7 +12,7 @@ def draw(ctx, me):
     bh = styleData['bh']
     rw = styleData['rw']
 
-    dr = me['drawRect']
+    dr = ctx.getMEData(me, 'drawRect')
 
     # Compute the sizes of the 'stretchy' bits
     srcRW = srcW - (lw + rw)

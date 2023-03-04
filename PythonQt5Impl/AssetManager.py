@@ -76,12 +76,15 @@ class AssetManager():
     def getIconImage(self, iconName):
         return self.imageCache['Icon/' + iconName]
 
-    def inflateDrawRectForStyle(self, me):
+    def inflateRectForStyle(self, me, rect):
+        rectCopy = copy.copy(rect)
         styleData = self.getStyleData((me['style']))
         styleExtraW = styleData['lw'] + styleData['lm'] + styleData['rm'] + styleData['rw']
         styleExtraH = styleData['th'] + styleData['tm'] + styleData['bm'] + styleData['bh']
-        me['drawRect'].w += styleExtraW
-        me['drawRect'].h += styleExtraH
+        rectCopy.w += styleExtraW
+        rectCopy.h += styleExtraH
+
+        return rectCopy
 
     def adjustAvailableForStyle(self, me, available):
         styleData = self.getStyleData((me['style']))
@@ -178,15 +181,17 @@ class AssetManager():
         return available
 
     def offsetModelElement(self, me, dx, dy):
-        me['drawRect'].x += dx
-        me['drawRect'].y += dy
+        dr = self.ctx.getMEData(me, 'drawrect')
+        dr.x += dx
+        dr.y += dy
         if 'contents' in me:
             for kid in me['contents']:
                 self.offsetModelElement(kid, dx, dy)
 
     def setModelElementPos(self, me, newX, newY):
-        dx = newX - me['drawRect'].x
-        dy = newY - me['drawRect'].y
+        dr = self.ctx.getMEData(me, 'drawrect')
+        dx = newX - dr.x
+        dy = newY - dr.y
         self.offsetModelElement(me, dx, dy)
 
     def drawModelElement(self, me):

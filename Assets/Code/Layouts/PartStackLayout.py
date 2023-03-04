@@ -6,7 +6,7 @@ def layout(ctx, available, me):
     available = panelLayout.layout(ctx, available, me)
 
     # Now use the PartStack's 'drawRect' to lay out the internals
-    dr = me['drawRect']
+    dr = ctx.getMEData(me, 'drawRect')
     adjusted = ctx.assetManager.adjustAvailableForStyle(me, dr)
 
     # First the View Tabs...a packed list of labels

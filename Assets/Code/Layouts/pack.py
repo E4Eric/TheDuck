@@ -1,7 +1,7 @@
 import copy
 
 def hpack(ctx, available, me):
-    me['drawRect'] = copy.copy(available)
+    dr = copy.copy(available)
 
     totalWidth = 0
     maxHeight = 0
@@ -10,19 +10,26 @@ def hpack(ctx, available, me):
     kidAvailable = ctx.assetManager.adjustAvailableForStyle(me, available)
     for kid in me['contents']:
         kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
-        totalWidth += kid['drawRect'].w
-        maxHeight = max(maxHeight, kid['drawRect'].h)
+        kr = ctx.getMEData(kid, 'drawRect')
+        totalWidth += kr.w
+        maxHeight = max(maxHeight, kr.h)
 
-    me['drawRect'].w = totalWidth
-    me['drawRect'].h = maxHeight
-    ctx.assetManager.inflateDrawRectForStyle(me)
+    # Pass 2: Set the width o the kids to the mas width found
+    for kid in me['contents']:
+        ctx.getMEData(kid, 'drawRect').h = maxHeight
 
-    available.x += me['drawRect'].w
-    available.w -= me['drawRect'].w
+    dr.w = totalWidth
+    dr.h = maxHeight
+    dr = ctx.assetManager.inflateRectForStyle(me, dr)
+    ctx.setMEData(me, 'drawRect', dr)
+
+    available.x += dr.w
+    available.w -= dr.w
 
     return available
+
 def vpack(ctx, available, me):
-    me['drawRect'] = copy.copy(available)
+    dr = copy.copy(available)
 
     totalHeight = 0
     maxWidth = 0
@@ -31,20 +38,21 @@ def vpack(ctx, available, me):
     kidAvailable = ctx.assetManager.adjustAvailableForStyle(me, available)
     for kid in me['contents']:
         kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
-        totalHeight += kid['drawRect'].h
-        maxWidth = max(maxWidth, kid['drawRect'].w)
+        kr = ctx.getMEData(kid, 'drawRect')
+        totalHeight += kr.h
+        maxWidth = max(maxWidth, kr.w)
 
     # Pass 2: Set the width o the kids to the mas width found
     for kid in me['contents']:
-        kid['drawRect'].w = maxWidth
+        ctx.getMEData(kid, 'drawRect').w = maxWidth
 
+    dr.h = totalHeight
+    dr.w = maxWidth
+    dr = ctx.assetManager.inflateRectForStyle(me, dr)
+    ctx.setMEData(me, 'drawRect', dr)
 
-    me['drawRect'].h = totalHeight
-    me['drawRect'].w = maxWidth
-    ctx.assetManager.inflateDrawRectForStyle(me)
-
-    available.y += me['drawRect'].h
-    available.h -= me['drawRect'].h
+    available.y += dr.h
+    available.h -= dr.h
 
     return available
 

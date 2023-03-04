@@ -1,4 +1,5 @@
 
 
 def draw(ctx, me):
-    dr = me['drawRect']
+    dr = ctx.getMEData(me, 'drawRect')
+

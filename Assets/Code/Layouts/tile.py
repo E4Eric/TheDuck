@@ -5,7 +5,7 @@ def layout(ctx, available, me):
     if 'contents' not in me:
         return available   # No-op
 
-    me['drawRect'] = copy.copy(available)
+    dr = copy.copy(available)
     sd = ctx.assetManager.getStyleData(me['style'])
 
     adjusted = ctx.assetManager.adjustAvailableForStyle(me, available)
@@ -13,7 +13,6 @@ def layout(ctx, available, me):
 
     # reserve the are we need for our style frame
     maxHeight = 0
-
     if side == 'top' or side == 'bottom':
         # reserve space now to get positioning correct
         kidAvailable = copy.copy(adjusted)
@@ -36,9 +35,9 @@ def layout(ctx, available, me):
                 kidAvailable.h -= maxHeight
                 kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
                 totalHeight += maxHeight
-                maxHeight = kid['drawRect'].h
+                maxHeight = ctx.getMEData(kid, 'drawRect').h
 
-            maxHeight = max(maxHeight, kid['drawRect'].h)
+            maxHeight = max(maxHeight, ctx.getMEData(kid, 'drawRect').h)
 
         totalHeight += maxHeight
 
@@ -50,19 +49,21 @@ def layout(ctx, available, me):
                     continue
 
                 if dx > 0:
-                    ctx.assetManager.offsetModelElement(kid, dx, 0)
+                    kr = ctx.getMEData(kid, 'drawRect')
+                    kr = kr.offset(dx, 0)
 
         # here we need to only change the height for the style
         styleData = ctx.assetManager.getStyleData(me['style'])
         totalHeight += styleData['th'] + styleData['tm'] + styleData['bh'] + styleData['bm']
-        me['drawRect'].h = totalHeight
+        dr.h = totalHeight
 
     if side == 'top':
-        available.y += me['drawRect'].h
+        available.y += dr.h
     elif side == 'bottom':
-        dy = available.h - me['drawRect'].h
-        ctx.assetManager.offsetModelElement(me, 0, dy)
+        dy = available.h - dr.h
+        dr.offset(0, dy)
 
-    available.h -= me['drawRect'].h
+    ctx.setMEData(me, 'drawRect', dr)
 
+    available.h -=  dr.h
     return available

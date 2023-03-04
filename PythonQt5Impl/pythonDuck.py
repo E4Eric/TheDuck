@@ -1,4 +1,5 @@
 import argparse
+import builtins
 import sys, os, copy, json, importlib
 from PyQt5 import QtGui, QtWidgets
 import QTPlatform, time
@@ -16,13 +17,26 @@ class RuntimeContext():
         self.curController = self.assetManager.getController(self.appModel['curController'])
         self.eventProxy = UIEventProxy.UIEventProxy(self, self.curController)
 
+        self.meData = {}
         self.partRegistry = {}
+
         # We have everything we need, start it up
         self.run()
 
     def run(self):
         self.window.show()
         sys.exit(self.app.exec_())
+
+    def setMEData(self, me, key, value):
+        if 'id' not in me:
+            me['id'] = builtins.id(me)
+        id = me['id']
+        if id not in self.meData:
+            self.meData[id] = {}
+        meData = self.meData[id][key] = value
+
+    def getMEData(self, me, key):
+        return self.meData[me['id']][key]
 
     def registerPart(self, me, partName):
         if 'partName' not in me:

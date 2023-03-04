@@ -9,13 +9,13 @@ class DisplayManager():
         self.layers[name] = me
 
         # force an update
-        dr = me['drawRect']
+        dr = self.ctx.getMEData(me, 'drawRect')
         self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
 
     def removeLayer(self, name):
         if name in self.layers:
             tooltipME = self.layers[name]
-            dr = tooltipME['drawRect']
+            dr = self.ctx.getMEData(tooltipME, 'drawRect')
             self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
             del self.layers[name]
 
@@ -57,9 +57,6 @@ class DisplayManager():
 
 
     def drawModelElement(self, me):
-        if 'drawRect' not in me:
-            return   # No-op
-
         # auto-draw the frame if the me has a 'style' that's not already frame
         if 'style' in me and me['style'] != 'frame':
             renderer = self.ctx.assetManager.getRenderer('frame')
@@ -73,15 +70,12 @@ class DisplayManager():
                 self.drawModelElement(kid)
 
     def refresh(self):
-        available = self.ctx.appModel['drawRect']
+        available = self.ctx.getMEData(self.ctx.appModel, 'drawRect')
         self.layoutModel(available)
         self.ctx.window.forceUpdate(0, 0, 0, 0)
 
     def pickElement(self, me, x, y):
-        if 'drawRect' not in me:
-            return None
-
-        dr = me['drawRect']
+        dr = self.ctx.getMEData(me, 'drawRect')
         if x < dr.x:
             return None
         if x > (dr.x + dr.w):

@@ -79,13 +79,14 @@ class UIEventProxy():
         self.leave(self.curElement)
         self.curElement = newcurElement
         self.enter(self.curElement)
-        self.printME(self.curElement)
 
     def mouseMove(self, x, y):
         self.mouseX = x
         self.mouseY = y
 
         pickedME = self.ctx.displayManager.pick(self.ctx.appModel, x, y)
+        if pickedME == None:
+            print("Nothing picked")
         self.setCurElement(pickedME)
 
         def timeout():

@@ -2,5 +2,7 @@
 
 def draw(ctx, me):
     styleImage = ctx.assetManager.getStyleImage(me['style'])
-    visible = ctx.window.crop(styleImage, 0, 0, me['drawRect'].w, me['drawRect'].h)
-    ctx.window.drawIcon(me['drawRect'].x, me['drawRect'].y, visible)
+    dr = ctx.getmeData(*me, 'drawRect')
+    visible = ctx.window.crop(styleImage, 0, 0, dr.w, dr.h)
+    dr = ctx.getMEData(me, 'drawRect')
+    ctx.window.drawIcon(dr.x, dr.y, visible)

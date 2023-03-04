@@ -1,11 +1,12 @@
 
 
 def draw(ctx, me):
+    dr = ctx.getMEData(me, 'drawRect')
     sd = ctx.assetManager.getStyleData(me['style'])
 
     # Adjust the top/right for the style
-    x = me['drawRect'].x + sd['lw'] + sd['rm']
-    y = me['drawRect'].y + sd['th'] + sd['tm']
+    x = dr.x + sd['lw'] + sd['rm']
+    y = dr.y + sd['th'] + sd['tm']
 
     if 'icon' in me:
         icon = ctx.assetManager.getIconImage(me['icon'])

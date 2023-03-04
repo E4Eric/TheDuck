@@ -42,7 +42,7 @@ def showTooltip(ctx, me):
     tooltipME = { "style": "Tooltip", 'label': tooltip }
 
     # now position it correctly, give it plenty of room
-    dr = me['drawRect']
+    dr = ctx.getmeData(me, 'drawRect')
     available = copy.copy(dr)
     available.x = dr.x
     available.y = dr.y + dr.h + 5
@@ -73,7 +73,7 @@ def showMenu(ctx, me, x, y):
     if 'submenu' not in me:
         return
 
-    dr = me['drawRect']
+    dr = ctx.getmeData(me, 'drawRect')
     submenu = me['submenu']
 
     # position it correctly, give it plenty of room
@@ -102,18 +102,20 @@ def showDropDown(ctx, me):
 
     mainMenuItem = me
 
-    dr = me['drawRect']
+    dr = ctx.getmeData(me, 'drawRect')
     showMenu(ctx, me, dr.x, dr.y + dr.h)
+
 def showSubMenu(ctx, me):
     global openSubMenus, mainMenuItem, highlightME
 
     if 'submenu' not in me:
         return
 
-    dr = me['drawRect']
+    dr = ctx.getmeData(me, 'drawRect')
     showMenu(ctx, me, dr.x + dr.w - 2, dr.y - 2)
 
 def enter(ctx, me, x ,y):
+    print('enter')
     global mainMenuItem, dragController
 
     # Hightlight handling...if the style has a ' (Over)' defined switchto it
@@ -128,6 +130,7 @@ def enter(ctx, me, x ,y):
         dragController.enter(ctx, me, x, y)
 
 def leave(ctx, me):
+    print('enter')
     global dragController
     if dragController != None:
         if not dragController.isDragging():

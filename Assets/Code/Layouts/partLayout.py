@@ -3,7 +3,7 @@ import copy
 
 def layout(ctx, available, me):
     # take it all
-    me['drawRect'] = copy.copy(available)
+    dr = copy.copy(available)
 
     # create the part itself
     if 'qtWidget' not in me:
@@ -11,7 +11,10 @@ def layout(ctx, available, me):
         partModule.createPart(ctx, me)
 
     widget = me['qtWidget']
-    dr = me['drawRect']
+    ctx.setMEData(me, 'drawRect', dr)
+
+    # place the widget 'inside' the frame
+    dr = ctx.assetManager.adjustAvailableForStyle(me, dr)
     widget.setGeometry(dr.x, dr.y, dr.w, dr.h)
 
     available.w = 0

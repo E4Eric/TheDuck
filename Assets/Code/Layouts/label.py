@@ -34,17 +34,16 @@ def layout(ctx, available, me):
         dr.w = max(iconW, textW)
         dr.h = textH + iconH + labelGap
 
-    me['drawRect'] = dr
-
     # 'wrap' ourselves in our style, growing as necessary
-    ctx.assetManager.inflateDrawRectForStyle(me)
+    dr = ctx.assetManager.inflateRectForStyle(me, dr)
+    ctx.setMEData(me, 'drawRect', dr)
 
     if side == 'top':
-        available.x += me['drawRect'].w
-        available.w -= me['drawRect'].w
+        available.x += dr.w
+        available.w -= dr.w
 
     if side == 'left':
-        available.y += me['drawRect'].h
-        available.h -= me['drawRect'].h
+        available.y += dr.h
+        available.h -= dr.h
 
     return available
