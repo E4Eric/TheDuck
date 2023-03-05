@@ -1,54 +1,8 @@
 import argparse
-import builtins
-import sys, os, copy, json, importlib
-from PyQt5 import QtGui, QtWidgets
-import QTPlatform, time
-import AssetManager, DisplayManager,  UIEventProxy
+import json
+import sys
 
-class RuntimeContext():
-    def __init__(self, appModel):
-        self.appModel = appModel
-        self.app = QtWidgets.QApplication(sys.argv)
-        self.window = QTPlatform.QTPlatform(self)
-
-        # Set up the managers
-        self.assetManager = AssetManager.AssetManager(self)
-        self.displayManager = DisplayManager.DisplayManager(self)
-        self.curController = self.assetManager.getController(self.appModel['curController'])
-        self.eventProxy = UIEventProxy.UIEventProxy(self, self.curController)
-
-        self.meData = {}
-        self.partRegistry = {}
-
-        # We have everything we need, start it up
-        self.run()
-
-    def run(self):
-        self.window.show()
-        sys.exit(self.app.exec_())
-
-    def setMEData(self, me, key, value):
-        if 'id' not in me:
-            me['id'] = builtins.id(me)
-        id = me['id']
-        if id not in self.meData:
-            self.meData[id] = {}
-        meData = self.meData[id][key] = value
-
-    def getMEData(self, me, key):
-        return self.meData[me['id']][key]
-
-    def registerPart(self, me, partName):
-        if 'partName' not in me:
-            return
-
-        partName = me['partName']
-        self.partRegistry[partName] = me
-
-    def getPart(self, partName):
-        if partName in self.partRegistry:
-            return self.partRegistry[partName]
-        return None
+from RuntimeContext import RuntimeContext
 
 # Load the model
 parser = argparse.ArgumentParser()
@@ -63,4 +17,8 @@ with open(modelPath, 'r') as modelData:
     appModel = json.load(modelData)
 
 # We have a model , create the runtime context
-ctx = RuntimeContext(appModel)
+ctx = RuntimeContext(appModel, None)
+ctx.window.show()
+sys.exit(ctx.app.exec_())
+
+

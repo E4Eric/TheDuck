@@ -1,7 +1,4 @@
 {
-  "appname" : "Eclipse Baby Duck",
-  "appTitle": "New Light",
-
   "assetDir": "../Assets",
   "curStyleSheet": "New Light",
   "curController": "IDE Controller",
@@ -101,15 +98,7 @@
     },
     { "style":  "Panel (left)", "size":  300, "side":  "left", "dragController": "PanelSizer","dragWidth": 5, "contents": [
       { "style": "Part", "partType": "File Explorer" }
-    ]},
-    { "style":  "Panel (bottom)", "size":  300, "side":  "bottom", "dragController": "PanelSizer","dragWidth": 5, "contents": [
-      { "style": "Part", "partType": "File Explorer" }
-    ]},
-    { "style":  "Panel (top)", "size":  40, "side":  "top", "dragController": "PanelSizer", "contents": [
-      { "style": "Part", "partType": "Slider" }
-    ]},
-    { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [
-      { "style": "Part", "partType": "Model Editor", "partName": "Text Editor" }
     ]}
   ]
+
 }

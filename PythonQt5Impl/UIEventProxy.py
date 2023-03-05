@@ -138,8 +138,6 @@ class UIEventProxy():
                 self.controller.rclick(self.ctx, self.curElement, self.mouseX, self.mouseY)
 
     def mousePressEvent(self, button):
-        print(button, " pressed !")
-
         self.downX = self.mouseX
         self.downY = self.mouseY
 
@@ -158,7 +156,6 @@ class UIEventProxy():
                 self.controller.mouseButtonPressed(self.ctx, button, self.mouseX, self.mouseY)
 
     def mouseReleaseEvent(self, button):
-        print(button, " released !")
         self.downX = None
         self.downY = None
 
