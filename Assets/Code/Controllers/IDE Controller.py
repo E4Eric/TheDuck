@@ -42,7 +42,7 @@ def showTooltip(ctx, me):
     tooltipME = { "style": "Tooltip", 'label': tooltip }
 
     # now position it correctly, give it plenty of room
-    dr = ctx.getmeData(me, 'drawRect')
+    dr = ctx.getMEData(me, 'drawRect')
     available = copy.copy(dr)
     available.x = dr.x
     available.y = dr.y + dr.h + 5
@@ -102,7 +102,7 @@ def showDropDown(ctx, me):
 
     mainMenuItem = me
 
-    dr = ctx.getmeData(me, 'drawRect')
+    dr = ctx.getMEData(me, 'drawRect')
     showMenu(ctx, me, dr.x, dr.y + dr.h)
 
 def showSubMenu(ctx, me):
@@ -111,7 +111,7 @@ def showSubMenu(ctx, me):
     if 'submenu' not in me:
         return
 
-    dr = ctx.getmeData(me, 'drawRect')
+    dr = ctx.getMEData(me, 'drawRect')
     showMenu(ctx, me, dr.x + dr.w - 2, dr.y - 2)
 
 def enter(ctx, me, x ,y):

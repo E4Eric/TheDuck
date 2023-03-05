@@ -30,7 +30,6 @@
             { "style": "Menu Item", "label": "Paste"}
           ]}
         },
-        { "style": "Main Menu Item", "label": "Edit" },
         { "style": "Main Menu Item", "label": "Source" },
         { "style": "Main Menu Item", "label": "Refactor" },
         { "style": "Main Menu Item", "label": "Navigate" },
