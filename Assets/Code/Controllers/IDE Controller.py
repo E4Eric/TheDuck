@@ -73,7 +73,7 @@ def showMenu(ctx, me, x, y):
     if 'submenu' not in me:
         return
 
-    dr = ctx.getmeData(me, 'drawRect')
+    dr = ctx.getMEData(me, 'drawRect')
     submenu = me['submenu']
 
     # position it correctly, give it plenty of room
