@@ -3,7 +3,7 @@ import json
 from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QWidget
 
-from TheDuck.PythonQt5Impl.RuntimeContext import RuntimeContext
+from RuntimeContext import RuntimeContext
 
 
 class ModelEditor(QWidget):

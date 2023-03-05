@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import sys
 
 from RuntimeContext import RuntimeContext
@@ -15,6 +16,9 @@ if modelPath == None:
 
 with open(modelPath, 'r') as modelData:
     appModel = json.load(modelData)
+
+# add ourselves to the sys path
+sys.path.append(os.getcwd())
 
 # We have a model , create the runtime context
 ctx = RuntimeContext(appModel, None)
