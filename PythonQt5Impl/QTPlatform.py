@@ -1,9 +1,10 @@
 import copy
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter, QCursor
+from PyQt5.QtWidgets import QLabel
 
 
 class R():
@@ -23,30 +24,74 @@ class R():
         return f'({self.x},{self.y},{self.w},{self.h})'
 
 class QTPlatform(QtWidgets.QWidget):
-    def __init__(self, ctx):
-        super().__init__()
+    def __init__(self, ctx, me, parent):
+        super().__init__(parent)
 
         self.ctx = ctx
-        self.fontCache = {}
-        self.painter = None
+        self.me = me
+        self.parent = parent
+
+        if parent == None:
+            self.fontCache = {}
+            self.setGeometry(100, 100, 1200, 750)
+            self.layers = {}
+        else:
+            # self.setWindowFlags(
+            #     self.windowFlags() |
+            #     QtCore.Qt.FramelessWindowHint |
+            #     QtCore.Qt.WindowStaysOnTopHint
+            # )
+            dr = self.ctx.getMEData(me, 'drawRect')
+            self.setGeometry(dr.x, dr.y, dr.w, dr.h)
+
+        # delegate to the runtime context so multiple instances can use the same painting code
+        self.ctx.painter = None
+        self.layers = {}
 
         self.setMouseTracking(True)
-        self.setGeometry(100, 100, 1200, 750)
-        print("init !!")
+
+    def addLayer(self, name, me):
+        layer = QTPlatform(self.ctx, me, self)
+        layer.raise_()
+        layer.show()
+        self.layers[name] = layer
+
+    def removeLayer(self, name):
+        if name in self.layers:
+            label = self.layers[name]
+            label.hide()
+            label.deleteLater()
+            self.ctx.app.processEvents()
+            del self.layers[name]
+
+            self.update()
+            self.setFocus()
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            pass
+        elif event.key() == Qt.Key_Return:
+            pass
+
+
+    def keyReleaseEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            pass
+        elif event.key() == Qt.Key_Return:
+            pass
 
     def resizeEvent(self, event):
         size = event.size()
         available = R(0,0, size.width(), size.height())
-        self.ctx.displayManager.layoutModel(available)
+        self.ctx.displayManager.layout(available, self.me)
 
     def paintEvent(self, event): 
-        self.painter = QPainter()   # Cache for callbacks...rebderers don't need to know
-        self.painter.begin(self)
+        self.ctx.painter = QPainter()   # Cache for callbacks...rebderers don't need to know
+        self.ctx.painter.begin(self)
 
-        self.ctx.displayManager.drawModel()
+        self.ctx.displayManager.drawModelElement(self.me)
         
-        self.painter.end()
-        self.painter = None
+        self.ctx.painter.end()
+        self.ctx.painter = None
 
     def forceUpdate(self, x, y, w, h):
         self.update()
@@ -123,19 +168,19 @@ class QTPlatform(QtWidgets.QWidget):
 
     def drawText(self, x, y, text, fontSpec):
         font, textColor = self.fontCache[fontSpec]
-        self.painter.setFont(font)
-        self.painter.setPen(QColor(textColor))
+        self.ctx.painter.setFont(font)
+        self.ctx.painter.setPen(QColor(textColor))
 
         r = QRect(x, y, 1000, 1000)
-        self.painter.drawText(r, Qt.AlignTop | Qt.AlignLeft,  text)
+        self.ctx.painter.drawText(r, Qt.AlignTop | Qt.AlignLeft,  text)
 
     def drawIcon(self, x, y, image):
-        self.painter.drawPixmap(x, y, image)
+        self.ctx.painter.drawPixmap(x, y, image)
 
     def drawImage(self, dx, dy, dw, dh, image, sx, sy, sw, sh):
         dstRect = QRect(dx, dy, dw, dh)
         srcRect = QRect(sx, sy, sw, sh)
-        self.painter.drawPixmap(srcRect, image, dstRect)
+        self.ctx.painter.drawPixmap(srcRect, image, dstRect)
 
     def crop(self, srcMap, x, y, w, h):
         return srcMap.copy(QRect(x, y, w, h))
@@ -150,18 +195,10 @@ class QTPlatform(QtWidgets.QWidget):
         else:
             self.setCursor(QCursor(Qt.ArrowCursor))
 
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_D:
-            self.ctx.appModel["curStyleSheet"] = "Eclipse Dark"
-            available = R(0, 0, self.rect().width(), self.rect().height())
-            self.ctx.layout(available, self.ctx.appModel)
-            self.update()
-
-        if event.key() == Qt.Key_S:
-            self.ctx.appModel["curStyleSheet"] = "Eclipse Light"
-            available = R(0, 0, self.rect().width(), self.rect().height())
-            self.ctx.layout(available, self.ctx.appModel)
-            self.update()
+    def enterEvent(self, event):
+        self.ctx.eventProxy.enterWidget(event.pos().x(), event.pos().y())
+    def leaveEvent(self, event):
+        self.ctx.eventProxy.leaveWidget(0, 0)
 
     def mouseMoveEvent(self, event):
         self.ctx.eventProxy.mouseMove(event.x(), event.y())

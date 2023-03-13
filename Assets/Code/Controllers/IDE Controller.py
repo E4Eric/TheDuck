@@ -10,16 +10,30 @@ openSubMenus = []
 # Drag support
 dragController = None
 
+listenerRegistered = False
+
 ################################################
 ## Highlight Handling
 ################################################
+def highlightListener(ctx, me, attName, oldVal, newVal):
+    print(f'highlight Changed: was {oldVal} is {newVal}')
+    ctx.window.update()
+
+def registerHighlightListener(ctx):
+    ctx.subscribe('highlighter', highlightListener)
+
 def highlightElement(ctx, me):
-    global highlightME  # Declare highlightME as a global variable
-    style = me['style']
-    if ctx.assetManager.testForStyle(style + " (Over)"):
+    global highlightME, listenerRegistered
+    if not listenerRegistered:
+        registerHighlightListener(ctx)
+        listenerRegistered = True
+
+    # To get highlighting you simply supply a '(Over)' version of your style
         me['style'] = me['style'] + " (Over)"
-        ctx.window.update()
         highlightME = me
+        highlightME['Highlighted'] = True
+        ctx.publish(highlightME, 'Highlighted', False, True)
+
 
 def clearHighlight(ctx):
     global highlightME  # Declare highlightME as a global variable
@@ -28,6 +42,8 @@ def clearHighlight(ctx):
         style = style.rstrip(' (Over)')
         highlightME['style'] = style
         ctx.window.update()
+
+        ctx.publish(highlightME, 'Highlighted', True, False)
         highlightME = None
 
 ################################################
@@ -76,32 +92,20 @@ def showMenu(ctx, me, x, y):
     dr = ctx.getMEData(me, 'drawRect')
     submenu = me['submenu']
 
-    # position it correctly, give it plenty of room
-    available = copy.copy(dr)
-    available.x = x
-    available.y = y
-    available.w = 10000
-    available.h = 10000
+    ctx.displayManager.showPartInWidget(submenu, "Menu", x, y)
 
-    layoutCode = ctx.assetManager.getLayout('pack')
-    layoutCode.layout(ctx, available, submenu)
 
-    layerName = f"Sub Menu  {len(openSubMenus)}"
-    ctx.displayManager.addLayer(layerName, submenu)
-    openSubMenus.append(layerName)
+    # layerName = f"Sub Menu  {len(openSubMenus)}"
+    # ctx.displayManager.addLayer(layerName, submenu)
+    # openSubMenus.append(layerName)
 
 def showDropDown(ctx, me):
-    global openSubMenus, mainMenuItem, highlightME
+    global mainMenuItem
 
-    if 'submenu' not in me:
-        return
-    if mainMenuItem == me:
-        return  # already open
     if mainMenuItem != me:
         clearSubMenus(ctx)
 
     mainMenuItem = me
-
     dr = ctx.getMEData(me, 'drawRect')
     showMenu(ctx, me, dr.x, dr.y + dr.h)
 
@@ -118,7 +122,9 @@ def enter(ctx, me, x ,y):
     global mainMenuItem, dragController
 
     # Hightlight handling...if the style has a ' (Over)' defined switchto it
-    highlightElement(ctx, me)
+    style = me['style']
+    if ctx.assetManager.testForStyle(style + " (Over)"):
+        highlightElement(ctx, me)
 
     # If the main menu is open and we go over another one then open it
     if mainMenuItem != None and 'Main Menu Item' in me['style'] and me != mainMenuItem:

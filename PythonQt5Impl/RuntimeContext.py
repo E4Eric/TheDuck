@@ -12,12 +12,14 @@ class RuntimeContext():
         if parentContext == None:
             self.app = QtWidgets.QApplication(sys.argv)
 
-        self.window = QTPlatform.QTPlatform(self)
+        self.window = QTPlatform.QTPlatform(self, appModel, None)
 
         # Set up the managers
         self.assetManager = AssetManager.AssetManager(self)
         self.displayManager = DisplayManager.DisplayManager(self)
-        self.curController = self.assetManager.getController(self.appModel['curController'])
+
+        self.listeners = {}
+        self.curController = self.setController(self.appModel['curController'])
         self.eventProxy = UIEventProxy.UIEventProxy(self, self.curController)
 
         # Share the runtime data caches
@@ -28,6 +30,11 @@ class RuntimeContext():
             self.meData = parentContext.meData
             self.partRegistry = parentContext.partRegistry
 
+    def setController(self, controllerName):
+        module = self.assetManager.getController(controllerName)
+        controller = module.createController(self)
+        return controller
+
     def setMEData(self, me, key, value):
         if 'id' not in me:
             me['id'] = builtins.id(me)
@@ -37,7 +44,19 @@ class RuntimeContext():
         meData = self.meData[id][key] = value
 
     def getMEData(self, me, key):
-        return self.meData[me['id']][key]
+        value = self.meData[me['id']][key]
+        return value
+
+    def subscribe(self, name, listener):
+        self.listeners[name] = listener
+
+    def removeListener(self, name):
+        del self.listeners[name]
+
+    def publish(self, me, attName, oldVal, newVal):
+        for listenerName in self.listeners:
+            listener = self.listeners[listenerName]
+            listener(self, me, attName, oldVal, newVal)
 
     def registerPart(self, me, partName):
         if 'partName' not in me:
