@@ -1,23 +1,38 @@
+import copy
 import time
+
+from PyQt5.QtCore import QTimer
+
 
 class DisplayManager():
     def __init__(self, ctx):
         self.ctx = ctx
-        self.layers = {}
 
     def addLayer(self, name, me):
-        self.layers[name] = me
-
-        # force an update
-        dr = self.ctx.getMEData(me, 'drawRect')
-        self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
+        print(f' *** App Draw Rect (before addLayer): {self.ctx.getMEData(self.ctx.appModel, "drawRect")}')
+        self.ctx.window.addLayer(name, me)
+        print(f' *** App Draw Rect (after addLayer): {self.ctx.getMEData(self.ctx.appModel, "drawRect")}')
 
     def removeLayer(self, name):
-        if name in self.layers:
-            tooltipME = self.layers[name]
-            dr = self.ctx.getMEData(tooltipME, 'drawRect')
-            self.ctx.window.forceUpdate(dr.x, dr.y, dr.w, dr.h)
-            del self.layers[name]
+        self.ctx.window.removeLayer(name)
+
+    def showPartInWidget(self, me, partType, x, y):
+        # First, how big do we need to be ?
+        self.layoutElement(0, 0, 10000, 10000, me)
+        dr = self.ctx.getMEData(me, 'drawRect')
+
+        # Now create a model Element for the Widget
+        widgetPart = { "style": "Part", "partType": partType, "modelElement": me }
+        self.layoutElement(x, y, dr.w, dr.h, widgetPart)
+
+    def showMEInWidget(self, me, x, y):
+        # First, how big do we need to be ?
+        meToShow = me['modelElement']
+        self.layoutElement(0, 0, 10000, 10000, meToShow)
+        dr = self.ctx.getMEData(meToShow, 'drawRect')
+
+        # Now create a model Element for the Widget
+        self.layoutElement(x, y, dr.w, dr.h, me)
 
     def getLayoutCode(self, me):
         if 'layout' in me:
@@ -39,6 +54,14 @@ class DisplayManager():
         end = time.perf_counter()
         # print('Layout Model: ', end - start)
 
+    def layoutElement(self, x, y ,w, h, me):
+        available = copy.copy(self.ctx.getMEData(self.ctx.appModel, 'drawRect'))
+        available.x = x
+        available.y = y
+        available.w = w
+        available.h = h
+        self.layout(available, me)
+
     def layout(self, available, me):
         layout = self.getLayoutCode(me)
         available = layout.layout(self.ctx, available, me)
@@ -47,11 +70,6 @@ class DisplayManager():
     def drawModel(self):
         start = time.perf_counter()
         self.drawModelElement(self.ctx.appModel)
-
-        #add layers
-        for layer in self.layers:
-            self.drawModelElement(self.layers[layer])
-
         end = time.perf_counter()
         # print('Draw: ', end - start)
 
@@ -94,11 +112,5 @@ class DisplayManager():
         return me
 
     def pick(self, me, x ,y):
-        # Check layers
-        for layer in self.layers:
-            picked = self.pickElement(self.layers[layer], x, y)
-            if picked != None:
-                return picked
-
         # now check the display structure
         return self.pickElement(me, x, y)

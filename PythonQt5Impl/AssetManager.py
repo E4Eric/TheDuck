@@ -23,7 +23,7 @@ class AssetManager():
             for file in files:
                 if (file.endswith('.py')):
                     lineCount = self.countLines(file, srcDir)
-                    moduleName = file.rstrip('.py')
+                    moduleName = file.rsplit('.', 1)[0]
                     module = importlib.import_module(moduleName)
                     moduleCache[moduleName] = module
                     print(f'   ...{moduleName}: {lineCount}')

@@ -22,6 +22,7 @@ sys.path.append(os.getcwd())
 
 # We have a model , create the runtime context
 ctx = RuntimeContext(appModel, None)
+ctx.window.setGeometry(100, 100, 1200, 750)
 ctx.window.show()
 sys.exit(ctx.app.exec_())
 

@@ -1,5 +1,9 @@
 import threading
 
+from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QLabel
+
+
 class UIEventProxy():
     def __init__(self, ctx, controller):
         self.ctx = ctx
@@ -19,41 +23,23 @@ class UIEventProxy():
         self.rButton = False
         self.mButton = False
 
-        # Drag parameters
-        self.hysteresisSize = 3   # how far the mouse has to move before doing a 'dragStart'
-
         # Element handling
         self.curElement = None
         self.dragElement = None
 
-        # hover timer
-        self.timer = None
-        self.timeout = 0.3
-
         # Drag Support
         self.dragType = None
+
+        # Initialize the hover timer
+        self.timer = QTimer(self.ctx.window)
+        self.timer.setInterval(500)
+        self.timer.setSingleShot(True)
+        self.timer.timeout.connect(self.hover)
 
     def setController(self, controller):
         curController = self.controller
         self.controller = controller
         return curController
-
-    def printME(self, me):
-        if me == None:
-            print('None')
-            return
-
-        str = ""
-        if 'label' in me:
-            label = me['label']
-            str += f'Label: {label} '
-        if 'icon' in me:
-            label = me['icon']
-            str += f'Icon: {label} '
-        if 'tooltip' in me:
-            label = me['tooltip']
-            str += f'Tooltip: {label} '
-        print(str)
 
     def enter(self, me):
         if me != None:
@@ -68,10 +54,11 @@ class UIEventProxy():
                     self.controller.leave(self.ctx, me)
 
     def hover(self):
+        self.timer.stop()
         if (self.curElement != None):
             if self.controller != None:
                 if hasattr(self.controller, 'hover'):
-                    self.controller.hover(self.ctx, self.curElement)
+                    self.controller.hover(self.ctx, self.curElement, self.mouseX, self.mouseY)
 
     def setCurElement(self, newcurElement):
         if (newcurElement == self.curElement):
@@ -80,23 +67,17 @@ class UIEventProxy():
         self.curElement = newcurElement
         self.enter(self.curElement)
 
+
     def mouseMove(self, x, y):
+        # print(f'Proxy Mouse Move {x}, {y})')
         self.mouseX = x
         self.mouseY = y
 
+        # print(f' *** App Draw Rect: {self.ctx.getMEData(self.ctx.appModel, "drawRect")}')
         pickedME = self.ctx.displayManager.pick(self.ctx.appModel, x, y)
-        if pickedME == None:
-            print("Nothing picked")
         self.setCurElement(pickedME)
 
-        def timeout():
-            self.hover()
-            self.timer = None
-
-        # restart the timer
-        if self.timer != None:
-            self.timer.cancel()
-        self.timer = threading.Timer(0.3, timeout)
+        # reset the hover timer
         self.timer.start()
 
         # Drag Support
@@ -166,15 +147,9 @@ class UIEventProxy():
         if button == 'middle':
            self.mButton = False
 
-        self.downX = 0
-        self.downY = 0
+    def enterWidget(self, x, y):
+        print('Enter Widget')
 
-        if self.controller != None:
-            if hasattr(self.controller, 'mouseButtonReleased'):
-                self.controller.mouseButtonReleased(self.ctx, button, self.mouseX, self.mouseY)
-
-        if self.dragElement:
-            if self.controller != None and self.dragElement != None:
-                if hasattr(self.controller, 'dragEnd'):
-                    self.controller.dragEnd(self.ctx, self.curElement, self.mouseX, self.mouseY)
+    def leaveWidget(self, x, y):
+        print('Leave Widget')
 
