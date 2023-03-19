@@ -9,31 +9,24 @@ class RuntimeContext():
     def __init__(self, appModel, parentContext):
         self.appModel = appModel
         self.parentContext = parentContext
+
+        # common painter for all renderers
+        self.painter = None
+
+        # Start the app on first create
         if parentContext == None:
             self.app = QtWidgets.QApplication(sys.argv)
-
-        self.window = QTPlatform.QTPlatform(self, appModel, None)
-
-        # Set up the managers
-        self.assetManager = AssetManager.AssetManager(self)
-        self.displayManager = DisplayManager.DisplayManager(self)
-
-        self.listeners = {}
-        self.curController = self.setController(self.appModel['curController'])
-        self.eventProxy = UIEventProxy.UIEventProxy(self, self.curController)
-
-        # Share the runtime data caches
-        if parentContext == None:
+            self.window = QTPlatform.QTPlatform(self, appModel, None)
+            # self.displayManager = DisplayManager.DisplayManager(self)
+            # self.assetManager = AssetManager.AssetManager(self)
+            self.listeners = {}
             self.meData = {}
             self.partRegistry = {}
         else:
-            self.meData = parentContext.meData
-            self.partRegistry = parentContext.partRegistry
+            self.window = QTPlatform.QTPlatform(self, appModel, parentContext.window)
 
-    def setController(self, controllerName):
-        module = self.assetManager.getController(controllerName)
-        controller = module.createController(self)
-        return controller
+    def createChildContext(self, me):
+        return RuntimeContext(me, self)
 
     def setMEData(self, me, key, value):
         if 'id' not in me:
@@ -41,7 +34,7 @@ class RuntimeContext():
         id = me['id']
         if id not in self.meData:
             self.meData[id] = {}
-        meData = self.meData[id][key] = value
+        self.meData[id][key] = value
 
     def getMEData(self, me, key):
         value = self.meData[me['id']][key]

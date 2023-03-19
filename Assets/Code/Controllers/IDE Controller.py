@@ -118,7 +118,7 @@ def showSubMenu(ctx, me):
     dr = ctx.getMEData(me, 'drawRect')
     showMenu(ctx, me, dr.x + dr.w - 2, dr.y - 2)
 
-def enter(ctx, me, x ,y):
+def enter(me, x ,y):
     global mainMenuItem, dragController
 
     # Hightlight handling...if the style has a ' (Over)' defined switchto it
@@ -134,7 +134,7 @@ def enter(ctx, me, x ,y):
         dragController = ctx.assetManager.getController(me['dragController'])
         dragController.enter(ctx, me, x, y)
 
-def leave(ctx, me):
+def leave(me, x, y):
     global dragController
     if dragController != None:
         if not dragController.isDragging():

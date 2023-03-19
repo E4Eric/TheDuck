@@ -1,14 +1,14 @@
 import copy
 
 
-def layout(ctx, available, me):
+def layout(window, available, me):
     if 'contents' not in me:
         return available   # No-op
 
     dr = copy.copy(available)
-    sd = ctx.assetManager.getStyleData(me['style'])
+    sd = window.assetManager.getStyleData(me['style'])
 
-    adjusted = ctx.assetManager.adjustAvailableForStyle(me, available)
+    adjusted = window.assetManager.adjustAvailableForStyle(me, available)
     side = sd['side']
 
     # reserve the are we need for our style frame
@@ -27,17 +27,17 @@ def layout(ctx, available, me):
                 spacer = kid
                 continue
 
-            kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
+            kidAvailable = window.assetManager.layout(kidAvailable, kid)
             if kidAvailable.w < 0:  # ..overflow, wrap
                 kidAvailable.x = startX
                 kidAvailable.w = startWidth
                 kidAvailable.y += maxHeight
                 kidAvailable.h -= maxHeight
-                kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
+                kidAvailable = window.assetManager.layout(kidAvailable, kid)
                 totalHeight += maxHeight
-                maxHeight = ctx.getMEData(kid, 'drawRect').h
+                maxHeight = window.getMEData(kid, 'drawRect').h
 
-            maxHeight = max(maxHeight, ctx.getMEData(kid, 'drawRect').h)
+            maxHeight = max(maxHeight, window.getMEData(kid, 'drawRect').h)
 
         totalHeight += maxHeight
 
@@ -49,11 +49,11 @@ def layout(ctx, available, me):
                     continue
 
                 if dx > 0:
-                    kr = ctx.getMEData(kid, 'drawRect')
+                    kr = window.getMEData(kid, 'drawRect')
                     kr = kr.offset(dx, 0)
 
         # here we need to only change the height for the style
-        styleData = ctx.assetManager.getStyleData(me['style'])
+        styleData = window.assetManager.getStyleData(me['style'])
         totalHeight += styleData['th'] + styleData['tm'] + styleData['bh'] + styleData['bm']
         dr.h = totalHeight
 
@@ -63,7 +63,7 @@ def layout(ctx, available, me):
         dy = available.h - dr.h
         dr.offset(0, dy)
 
-    ctx.setMEData(me, 'drawRect', dr)
+    window.setMEData(me, 'drawRect', dr)
 
     available.h -=  dr.h
     return available

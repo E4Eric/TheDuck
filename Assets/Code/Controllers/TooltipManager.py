@@ -14,9 +14,9 @@ class createController():
             self.ctx.displayManager.removeLayer("Tooltip")
             self.tooltipShowing = False
 
-    def hover(self, ctx, me, x, y):
+    def hover(self, me, x, y):
         if 'tooltip'in me:
             self.showTooltip(me, x ,y)
 
-    def leave(self, ctx, me):
+    def leave(self, me, x, y):
         self.hideTooltip()

@@ -2,9 +2,6 @@ class createController():
     def __init__(self, ctx):
         self.ctx = ctx
 
-        self.highlightME = None
-        self.tooltipShowing = False
-
         self.controllers = []
         self.registerControllers()
 
@@ -14,20 +11,26 @@ class createController():
         self.controllers.append(controller)
 
     def registerControllers(self):
+        self.registerController("EventTracker")
         self.registerController("Highlighter")
         self.registerController('TooltipManager')
+        self.registerController('MenuManager')
 
 
-    def enter(self, ctx, me, x ,y):
+    def enter(self, me, x ,y):
         for controller in self.controllers:
             if hasattr(controller, 'enter'):
-                controller.enter(self.ctx, me, x, y)
+                controller.enter(me, x, y)
 
-    def leave(self, ctx, me):
+    def leave(self, me, x, y):
         for controller in self.controllers:
             if hasattr(controller, 'leave'):
-                controller.leave(self.ctx, me)
-    def hover(self, ctx, me, x, y):
+                controller.leave(me, x, y)
+    def hover(self, me, x, y):
         for controller in self.controllers:
             if hasattr(controller, 'hover'):
-                controller.hover(self.ctx, me, x, y)
+                controller.hover(me, x, y)
+    def lclick(self, me, x, y):
+        for controller in self.controllers:
+            if hasattr(controller, 'lclick'):
+                controller.lclick(me, x, y)

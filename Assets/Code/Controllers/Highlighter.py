@@ -1,6 +1,6 @@
 class createController():
-    def __init__(self, ctx):
-        self.ctx = ctx
+    def __init__(self, wndow):
+        self.window = wndow
         self.highlightME = None
         # self.registerHighlightListener()
 
@@ -13,25 +13,25 @@ class createController():
 
     def highlightElement(self, me):
         style = me['style']
-        if self.ctx.assetManager.testForStyle(style + " (Over)"):
+        if self.window.assetManager.testForStyle(style + " (Over)"):
             me['style'] = me['style'] + " (Over)"
-            self.ctx.window.update()
+            self.window.update()
             self.highlightME = me
 
-    def clearHighlight(self, ctx):
+    def clearHighlight(self):
         if self.highlightME != None:
             style = self.highlightME['style']
             style = style.rstrip(' (Over)')
             self.highlightME['style'] = style
-            ctx.window.update()
+            self.window.update()
             self.highlightME = None
 
-    def enter(self, ctx, me, x ,y):
+    def enter(self, me, x ,y):
         # Hightlight handling...if the style has a ' (Over)' defined switchto it
         style = me['style']
-        if ctx.assetManager.testForStyle(style + " (Over)"):
+        if self.window.assetManager.testForStyle(style + " (Over)"):
             self.highlightElement(me)
 
-    def leave(self, ctx, me):
-        self.clearHighlight(ctx)
+    def leave(self, me, x, y):
+        self.clearHighlight()
 

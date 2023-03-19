@@ -1,7 +1,7 @@
 import copy
 
 
-def layout(ctx, available, me):
+def layout(window, available, me):
     side = me['side']
     if 'size' in me:
         size = me['size']
@@ -33,11 +33,11 @@ def layout(ctx, available, me):
 
     # drawRect set...layout the kids inside me
     # grab room for the style first since we layout inside us...
-    kidAvailable = ctx.assetManager.adjustAvailableForStyle(me, dr)
+    kidAvailable = window.assetManager.adjustAvailableForStyle(me, dr)
     if 'contents' in me:
         for kid in me['contents']:
-            kidAvailable = ctx.assetManager.layout(kidAvailable, kid)
+            kidAvailable = window.assetManager.layout(kidAvailable, kid)
 
-    ctx.setMEData(me, 'drawRect', dr)
+    window.setMEData(me, 'drawRect', dr)
 
     return available

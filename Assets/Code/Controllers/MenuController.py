@@ -5,28 +5,28 @@ class MenuController():
 
         self.highlightME = None
 
-    def highlightElement(self, ctx, me):
+    def highlightElement(self, me):
         style = me['style']
-        if ctx.assetManager.testForStyle(style + " (Over)"):
+        if self.ctx.assetManager.testForStyle(style + " (Over)"):
             me['style'] = me['style'] + " (Over)"
-            ctx.window.update()
+            self.ctx.window.update()
             self.highlightME = me
 
-    def clearHighlight(self, ctx):
+    def clearHighlight(self):
         if self.highlightME != None:
             style = self.highlightME['style']
             style = style.rstrip(' (Over)')
             self.highlightME['style'] = style
-            ctx.window.update()
+            self.ctx.window.update()
             self.highlightME = None
 
-    def enter(self, ctx, me, x ,y):
+    def enter(self, me, x ,y):
         # Hightlight handling...if the style has a ' (Over)' defined switchto it
-        self.highlightElement(ctx, me)
+        self.highlightElement(me)
 
-    def enter(self, ctx, me, x ,y):
+    def enter(self, me, x ,y):
         # Hightlight handling...if the style has a ' (Over)' defined switchto it
-        self.highlightElement(ctx, me)
+        self.highlightElement(me)
 
-    def leave(self, ctx, me):
-        self.clearHighlight(ctx)
+    def leave(self, me, x, y):
+        self.clearHighlight()

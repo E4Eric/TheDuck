@@ -74,16 +74,16 @@ def setDragState(ctx, me, x, y):
         else:
             ctx.window.setPointer("Default")
 
-def enter(ctx, me, x, y):
+def enter(me, x, y):
     global panel, panelSide, sd
 
     panel = me
-    sd = ctx.assetManager.getStyleData(panel['style'])
+    sd = self.ctx.assetManager.getStyleData(panel['style'])
     panelSide = panel['side']
 
     setDragState(ctx, panel, x, y)
 
-def leave(ctx, me):
+def leave(ctx, me, x, y):
     ctx.window.setPointer("Default")
 
 def dragStart(ctx, panel, x, y):

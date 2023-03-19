@@ -1,10 +1,13 @@
+import builtins
 import copy
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter, QCursor
-from PyQt5.QtWidgets import QLabel
+
+import AssetManager, DisplayManager,  UIEventProxy
 
 
 class R():
@@ -24,48 +27,117 @@ class R():
         return f'({self.x},{self.y},{self.w},{self.h})'
 
 class QTPlatform(QtWidgets.QWidget):
-    def __init__(self, ctx, me, parent):
+    def __init__(self, app, appModel, parent=None):
         super().__init__(parent)
 
-        self.ctx = ctx
-        self.me = me
+        self.app = app
+        self.appModel = appModel
         self.parent = parent
 
-        if parent == None:
-            self.fontCache = {}
-            self.setGeometry(100, 100, 1200, 750)
-            self.layers = {}
-        else:
-            # self.setWindowFlags(
-            #     self.windowFlags() |
-            #     QtCore.Qt.FramelessWindowHint |
-            #     QtCore.Qt.WindowStaysOnTopHint
-            # )
-            dr = self.ctx.getMEData(me, 'drawRect')
-            self.setGeometry(dr.x, dr.y, dr.w, dr.h)
+        self.listeners = {}
+        self.partRegistry = {}
 
-        # delegate to the runtime context so multiple instances can use the same painting code
-        self.ctx.painter = None
         self.layers = {}
+
+        self.displayManager = DisplayManager.DisplayManager(self)
+
+        if 'assetDir' in self.appModel:
+            self.assetManager = AssetManager.AssetManager(self)
+            self.fontCache = {}
+        else:
+            self.assetManager = parent.assetManager
+            self.fontCache = parent.fontCache
+
+        # HACK !! the following code needs refactoring...it relies on 'model' windows all having 'controllers'
+        # it also assumes that a 'appModel' with no controllers is a 'layer' and inherits caches and such from its parent
+        if 'controllers' in appModel:
+            self.eventProxy = UIEventProxy.UIEventProxy(self)
+            controllerNames = appModel['controllers']
+            self.eventProxy.setControllers(controllerNames)
+            self.meData = {}
+        else:
+            self.meData = parent.meData
+            self.eventProxy = UIEventProxy.UIEventProxy(self)
+            controllerNames = self.getTopWindow().appModel['controllers']
+            self.eventProxy.setControllers(controllerNames)
 
         self.setMouseTracking(True)
 
+    def createChild(self, appModel):
+        child = QTPlatform(self.app, appModel, self)
+        return child
+
+    def getTopWindow(self):
+        window = self
+        while window.parent != None:
+            window = window.parent
+        return window
+
+    def getPos(self):
+        geo = self.geometry()
+        return R(geo.x(), geo.y(), geo.width(), geo.height())
+
+    def clearLayers(self):
+        layerCopy = copy.copy(self.getTopWindow().layers)
+        for layerMane in layerCopy:
+            self.removeLayer(layerMane)
+        print("done")
+
     def addLayer(self, name, me):
-        layer = QTPlatform(self.ctx, me, self)
-        layer.raise_()
-        layer.show()
-        self.layers[name] = layer
+        topWindow = self.getTopWindow()
+        window = QTPlatform(topWindow.app, me, topWindow)
+
+        dr = self.getMEData(me, 'drawRect')
+        window.setGeometry(dr.x, dr.y, dr.w, dr.h)
+        window.raise_()
+        window.show()
+        topWindow.layers[name] = window
 
     def removeLayer(self, name):
-        if name in self.layers:
-            label = self.layers[name]
-            label.hide()
-            label.deleteLater()
-            self.ctx.app.processEvents()
-            del self.layers[name]
+        print(f' *** removeLayer {name} ***')
+        topWindow = self.getTopWindow()
+        if name in topWindow.layers:
+            window = topWindow.layers[name]
+            window.hide()
+            window.deleteLater()
 
-            self.update()
-            self.setFocus()
+            del topWindow.layers[name]
+
+    def setMEData(self, me, key, value):
+        if 'id' not in me:
+            me['id'] = builtins.id(me)
+        id = me['id']
+        if id not in self.meData:
+            self.meData[id] = {}
+        self.meData[id][key] = value
+
+    def getMEData(self, me, key):
+        value = self.meData[me['id']][key]
+        return value
+
+    def subscribe(self, name, listener):
+        self.listeners[name] = listener
+
+    def removeListener(self, name):
+        del self.listeners[name]
+
+    def publish(self, me, attName, oldVal, newVal):
+        for listenerName in self.listeners:
+            listener = self.listeners[listenerName]
+            listener(self, me, attName, oldVal, newVal)
+
+    def registerPart(self, me, partName):
+        if 'partName' not in me:
+            return
+
+        partName = me['partName']
+        self.partRegistry[partName] = me
+
+    def getPart(self, partName):
+        if partName in self.partRegistry:
+            return self.partRegistry[partName]
+        return None
+
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Escape:
             pass
@@ -82,16 +154,16 @@ class QTPlatform(QtWidgets.QWidget):
     def resizeEvent(self, event):
         size = event.size()
         available = R(0,0, size.width(), size.height())
-        self.ctx.displayManager.layout(available, self.me)
+        self.displayManager.layout(available, self.appModel)
 
     def paintEvent(self, event): 
-        self.ctx.painter = QPainter()   # Cache for callbacks...rebderers don't need to know
-        self.ctx.painter.begin(self)
+        self.painter = QPainter()   # Cache for callbacks...rebderers don't need to know
+        self.painter.begin(self)
 
-        self.ctx.displayManager.drawModelElement(self.me)
+        self.displayManager.drawModelElement(self.appModel)
         
-        self.ctx.painter.end()
-        self.ctx.painter = None
+        self.painter.end()
+        self.painter = None
 
     def forceUpdate(self, x, y, w, h):
         self.update()
@@ -168,19 +240,20 @@ class QTPlatform(QtWidgets.QWidget):
 
     def drawText(self, x, y, text, fontSpec):
         font, textColor = self.fontCache[fontSpec]
-        self.ctx.painter.setFont(font)
-        self.ctx.painter.setPen(QColor(textColor))
+        self.painter.setFont(font)
+        self.painter.setPen(QColor(textColor))
 
         r = QRect(x, y, 1000, 1000)
-        self.ctx.painter.drawText(r, Qt.AlignTop | Qt.AlignLeft,  text)
+        self.\
+            painter.drawText(r, Qt.AlignTop | Qt.AlignLeft,  text)
 
     def drawIcon(self, x, y, image):
-        self.ctx.painter.drawPixmap(x, y, image)
+        self.painter.drawPixmap(x, y, image)
 
     def drawImage(self, dx, dy, dw, dh, image, sx, sy, sw, sh):
         dstRect = QRect(dx, dy, dw, dh)
         srcRect = QRect(sx, sy, sw, sh)
-        self.ctx.painter.drawPixmap(srcRect, image, dstRect)
+        self.painter.drawPixmap(srcRect, image, dstRect)
 
     def crop(self, srcMap, x, y, w, h):
         return srcMap.copy(QRect(x, y, w, h))
@@ -196,26 +269,26 @@ class QTPlatform(QtWidgets.QWidget):
             self.setCursor(QCursor(Qt.ArrowCursor))
 
     def enterEvent(self, event):
-        self.ctx.eventProxy.enterWidget(event.pos().x(), event.pos().y())
+        self.eventProxy.enterWidget(event.pos().x(), event.pos().y())
     def leaveEvent(self, event):
-        self.ctx.eventProxy.leaveWidget(0, 0)
+        self.eventProxy.leaveWidget(self.eventProxy.mouseX, self.eventProxy.mouseY)
 
     def mouseMoveEvent(self, event):
-        self.ctx.eventProxy.mouseMove(event.x(), event.y())
+        self.eventProxy.mouseMove(event.x(), event.y())
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-           self.ctx.eventProxy.mousePressEvent("left")
+           self.eventProxy.mousePressEvent("left")
         if event.button() == Qt.RightButton:
-           self.ctx.eventProxy.mousePressEvent("right")
+           self.eventProxy.mousePressEvent("right")
         if event.button() == Qt.MidButton:
-           self.ctx.eventProxy.mousePressEvent("middle")
+           self.eventProxy.mousePressEvent("middle")
 
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-           self.ctx.eventProxy.mouseReleaseEvent("left")
+           self.eventProxy.mouseReleaseEvent("left")
         if event.button() == Qt.RightButton:
-           self.ctx.eventProxy.mouseReleaseEvent("right")
+           self.eventProxy.mouseReleaseEvent("right")
         if event.button() == Qt.MidButton:
-           self.ctx.eventProxy.mouseReleaseEvent("middle")
+           self.eventProxy.mouseReleaseEvent("middle")
 

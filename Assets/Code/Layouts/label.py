@@ -1,20 +1,20 @@
 import copy
 
 
-def layout(ctx, available, me):
+def layout(window, available, me):
     dr = copy.copy(available)
 
     style = me['style']
-    sd = ctx.assetManager.getStyleData(style)
+    sd = window.assetManager.getStyleData(style)
     side = sd['side']
 
     labelGap = 0
     iconW = 0
     iconH = 0
     if 'icon' in me:
-        icon = ctx.assetManager.getIconImage(me['icon'])
-        iconW = ctx.window.getImageWidth(icon)
-        iconH = ctx.window.getImageHeight(icon)
+        icon = window.assetManager.getIconImage(me['icon'])
+        iconW = window.getImageWidth(icon)
+        iconH = window.getImageHeight(icon)
 
     textW = 0
     textH = 0
@@ -23,8 +23,8 @@ def layout(ctx, available, me):
         if 'icon' in me:
             labelGap = sd['labelGap']
 
-        textW = ctx.window.getTextWidth(me['label'], sd['fontSpec'])
-        textH = ctx.window.getTextHeight(me['label'], sd['fontSpec'])
+        textW = window.getTextWidth(me['label'], sd['fontSpec'])
+        textH = window.getTextHeight(me['label'], sd['fontSpec'])
 
     if side == 'top':
         dr.w = textW + iconW + labelGap
@@ -35,8 +35,8 @@ def layout(ctx, available, me):
         dr.h = textH + iconH + labelGap
 
     # 'wrap' ourselves in our style, growing as necessary
-    dr = ctx.assetManager.inflateRectForStyle(me, dr)
-    ctx.setMEData(me, 'drawRect', dr)
+    dr = window.assetManager.inflateRectForStyle(me, dr)
+    window.setMEData(me, 'drawRect', dr)
 
     if side == 'top':
         available.x += dr.w

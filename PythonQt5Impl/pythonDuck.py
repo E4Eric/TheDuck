@@ -1,9 +1,9 @@
-import argparse
+import os, sys, argparse
 import json
-import os
-import sys
 
-from RuntimeContext import RuntimeContext
+from PyQt5 import QtWidgets
+
+import QTPlatform
 
 # Load the model
 parser = argparse.ArgumentParser()
@@ -20,10 +20,12 @@ with open(modelPath, 'r') as modelData:
 # add ourselves to the sys path
 sys.path.append(os.getcwd())
 
-# We have a model , create the runtime context
-ctx = RuntimeContext(appModel, None)
-ctx.window.setGeometry(100, 100, 1200, 750)
-ctx.window.show()
-sys.exit(ctx.app.exec_())
+# We have a model , create the window to show it
+app = QtWidgets.QApplication(sys.argv)
+window = QTPlatform.QTPlatform(app, appModel, None)
+# ctx = RuntimeContext(appModel, None)
+window.setGeometry(100, 100, 1200, 750)
+window.show()
+sys.exit(app.exec_())
 
 

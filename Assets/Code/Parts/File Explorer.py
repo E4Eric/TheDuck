@@ -6,10 +6,10 @@ from PyQt5.QtWidgets import QTreeView, QFileSystemModel, QTextEdit
 
 
 class FileExplorer(QTreeView):
-    def __init__(self, ctx, parent=None):
+    def __init__(self, parent):
         super().__init__(parent)
 
-        self.ctx = ctx
+        self.parent = parent
 
     def mouseDoubleClickEvent(self, event):
         index = self.indexAt(event.pos())
@@ -46,14 +46,14 @@ class FileExplorer(QTreeView):
             print("Double clicked on file:", item_data)
             # Do something with the file
 
-def createPart(ctx, me):
+def createPart(window, me):
     if 'qtWidget' in me:
         return
 
     print('create Part: ', me['partType'])
 
     # Create a tree view
-    widget = FileExplorer(ctx, ctx.window)
+    widget = FileExplorer(window)
     font = QFont('Arial', 14)
     widget.setFont(font)
 
