@@ -57,9 +57,7 @@ class QTPlatform(QtWidgets.QWidget):
             self.meData = {}
         else:
             self.meData = parent.meData
-            self.eventProxy = UIEventProxy.UIEventProxy(self)
-            controllerNames = self.getTopWindow().appModel['controllers']
-            self.eventProxy.setControllers(controllerNames)
+            self.eventProxy = parent.eventProxy
 
         self.setMouseTracking(True)
 
@@ -86,7 +84,6 @@ class QTPlatform(QtWidgets.QWidget):
     def addLayer(self, name, me):
         topWindow = self.getTopWindow()
         window = QTPlatform(topWindow.app, me, topWindow)
-
         dr = self.getMEData(me, 'drawRect')
         window.setGeometry(dr.x, dr.y, dr.w, dr.h)
         window.raise_()
@@ -98,10 +95,9 @@ class QTPlatform(QtWidgets.QWidget):
         topWindow = self.getTopWindow()
         if name in topWindow.layers:
             window = topWindow.layers[name]
+            del topWindow.layers[name]
             window.hide()
             window.deleteLater()
-
-            del topWindow.layers[name]
 
     def setMEData(self, me, key, value):
         if 'id' not in me:
@@ -269,26 +265,29 @@ class QTPlatform(QtWidgets.QWidget):
             self.setCursor(QCursor(Qt.ArrowCursor))
 
     def enterEvent(self, event):
-        self.eventProxy.enterWidget(event.pos().x(), event.pos().y())
+        print('@@@ Enter Widget @@@')
+        self.eventProxy.enterWidget(self, event.pos().x(), event.pos().y())
+
     def leaveEvent(self, event):
-        self.eventProxy.leaveWidget(self.eventProxy.mouseX, self.eventProxy.mouseY)
+        print('!!! Leave Widget !!!')
+        self.eventProxy.leaveWidget(self)
 
     def mouseMoveEvent(self, event):
-        self.eventProxy.mouseMove(event.x(), event.y())
+        self.eventProxy.mouseMove(self, event.x(), event.y())
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-           self.eventProxy.mousePressEvent("left")
+           self.eventProxy.mousePressEvent(self, "left")
         if event.button() == Qt.RightButton:
-           self.eventProxy.mousePressEvent("right")
+           self.eventProxy.mousePressEvent(self, "right")
         if event.button() == Qt.MidButton:
-           self.eventProxy.mousePressEvent("middle")
+           self.eventProxy.mousePressEvent(self, "middle")
 
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-           self.eventProxy.mouseReleaseEvent("left")
+           self.eventProxy.mouseReleaseEvent(self, "left")
         if event.button() == Qt.RightButton:
-           self.eventProxy.mouseReleaseEvent("right")
+           self.eventProxy.mouseReleaseEvent(self, "right")
         if event.button() == Qt.MidButton:
-           self.eventProxy.mouseReleaseEvent("middle")
+           self.eventProxy.mouseReleaseEvent(self, "middle")
 

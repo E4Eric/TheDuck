@@ -1,22 +1,30 @@
 class createController():
-    def __init__(self, ctx):
-        self.ctx = ctx
+    def __init__(self):
         self.tooltipShowing = False
 
-    def showTooltip(self, me, x, y):
+    def showTooltip(self, window, me, x, y):
         tooltipME = { 'style': "Tooltip", "label": me['tooltip'] }
-        self.ctx.displayManager.layoutElement(x, y, 10000, 1000, tooltipME)
-        self.ctx.displayManager.addLayer("Tooltip", tooltipME)
+        window.displayManager.layoutElement(x, y, 10000, 1000, tooltipME)
+        window.displayManager.addLayer("Tooltip", tooltipME)
         self.tooltipShowing = True
 
-    def hideTooltip(self):
-        if self.tooltipShowing:
-            self.ctx.displayManager.removeLayer("Tooltip")
+    def hideTooltip(self, window):
+            window.displayManager.removeLayer("Tooltip")
             self.tooltipShowing = False
 
-    def hover(self, me, x, y):
-        if 'tooltip'in me:
-            self.showTooltip(me, x ,y)
+    def hover(self, window, me, x, y):
+        if me == None:
+            self.hideTooltip(window)
+            return
 
-    def leave(self, me, x, y):
-        self.hideTooltip()
+        if 'tooltip'in me:
+            self.showTooltip(window, me, x ,y)
+
+    def leave(self, window, me):
+        self.hideTooltip(window)
+
+    def enterWidget(self, window, x, y):
+        self.hideTooltip(window)
+
+    def leaveWidget(self, window):
+        self.hideTooltip(window)

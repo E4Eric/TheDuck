@@ -14,6 +14,7 @@ class UIEventProxy():
         self.shift = False
 
         # Mouse
+        self.mouseWindow = None
         self.mouseX = 0
         self.mouseY = 0
         self.downX = 0
@@ -39,7 +40,7 @@ class UIEventProxy():
 
     def addController(self, name):
         module = self.window.assetManager.getController(name)
-        controller = module.createController(self.window)
+        controller = module.createController()
         self.controllers.append(controller)
 
     def setControllers(self, names):
@@ -47,103 +48,80 @@ class UIEventProxy():
         for name in names:
             self.addController(name)
 
-    def enter(self, me):
+    def enter(self, window, me, x, y):
         if me == None: return
 
         for controller in self.controllers:
             if hasattr(controller, 'enter'):
-                controller.enter(me, self.mouseX, self.mouseY)
+                controller.enter(window, me, self.mouseX, self.mouseY)
 
-    def leave(self, me, x, y):
+    def leave(self, window, me):
         if me == None: return
 
         for controller in self.controllers:
             if hasattr(controller, 'leave'):
-                controller.leave(me, x, y)
+                controller.leave(window, me)
 
     def hover(self):
         self.timer.stop()
 
         for controller in self.controllers:
             if hasattr(controller, 'hover'):
-                controller.hover(self.curElement, self.mouseX, self.mouseY)
+                controller.hover(self.mouseWindow, self.curElement, self.mouseX, self.mouseY)
 
-    def setCurElement(self, newcurElement):
+    def setCurElement(self, window, newcurElement):
         if (newcurElement == self.curElement):
             return
-        self.leave(self.curElement, self.mouseX, self.mouseY)
+        self.leave(window, self.curElement)
         self.curElement = newcurElement
-        self.enter(self.curElement)
+        self.enter(window, self.curElement, self.mouseX, self.mouseY)
 
 
-    def mouseMove(self, x, y):
+    def mouseMove(self, window, x, y):
         # print(f'Proxy Mouse Move {x}, {y})')
+        self.mouseWindow = window
         self.mouseX = x
         self.mouseY = y
 
-        pickedME = self.window.displayManager.pick(self.window.appModel, x, y)
-        self.setCurElement(pickedME)
+        pickedME = self.window.displayManager.pick(window.appModel, x, y)
+        self.setCurElement(window, pickedME)
 
         # reset the hover timer
         self.timer.start()
 
-        # Drag Support
-        for controller in self.controllers:
-            if hasattr(controller, 'getDragType'):
-                self.dragType = controller.getDragType(self.curElement, x, y)
-                if self.dragType != None:
-                    self.dragElement = self.curElement
-                    self.window.setPointer(self.dragType)
-                else:
-                    self.dragElement = None
-                    self.window.setPointer(self.dragType)
-
-        if self.dragType != None and self.lButton:
-            if self.dragType == "EW":  # drag Horizontal
-                dx = self.mouseX - self.downX
-                if abs(dx) > self.hysteresisSize:
-                    for controller in self.controllers:
-                        if hasattr(controller, 'dragStart'):
-                            controller.dragStart(self.dragElement, x, y)
-
-        # check if we need to test for dragging
-        for controller in self.controllers:
-            if hasattr(controller, 'dragMove'):
-                controller.dragMove(self.dragElement, x, y)
-
         for controller in self.controllers:
             if hasattr(controller, 'mouseMove'):
-                controller.mouseMove(self.curElement, x, y)
+                controller.mouseMove(window, self.curElement, x, y)
 
-    def lclick(self):
+    def lclick(self, window, me, x, y):
        for controller in self.controllers:
             if hasattr(controller, 'lclick'):
-                controller.lclick(self.curElement, self.mouseX, self.mouseY)
+                controller.lclick(window, me, x, y)
 
-    def rclick(self):
-        for controller in self.controllers:
+    def rclick(self, window, me, x, y):
+       for controller in self.controllers:
             if hasattr(controller, 'rclick'):
-                controller.rclick(self.curElement, self.mouseX, self.mouseY)
+                controller.rclick(window, me, x, y)
 
-    def mousePressEvent(self, button):
+    def mousePressEvent(self, window, button):
         self.downX = self.mouseX
         self.downY = self.mouseY
 
         self.lButton = button == 'left'
         if button == 'left':
             self.lButton = True
-            self.lclick()
+            self.lclick(window, self.curElement, self.mouseX, self.mouseY)
         if button == 'right':
             self.rButton = True
-            self.rclick()
+            self.lclick(window, self.curElement, self.mouseX, self.mouseY)
         if button == 'middle':
             self.mButton = True
 
         for controller in self.controllers:
             if hasattr(controller, 'mouseButtonPressed'):
-                controller.mouseButtonPressed(button, self.mouseX, self.mouseY)
+                controller.mouseButtonPressed(window, button, self.curElement, self.mouseX, self.mouseY)
 
-    def mouseReleaseEvent(self, button):
+    def mouseReleaseEvent(self, window, button):
         self.downX = None
         self.downY = None
 
@@ -154,9 +132,17 @@ class UIEventProxy():
         if button == 'middle':
            self.mButton = False
 
-    def enterWidget(self, x, y):
-        print('Enter Widget')
+        for controller in self.controllers:
+            if hasattr(controller, 'mouseButtonReleased'):
+                controller.mouseButtonReleased(window, button, self.curElement, self.mouseX, self.mouseY)
 
-    def leaveWidget(self, x, y):
-        print('Leave Widget')
+    def enterWidget(self, window, x, y):
+        for controller in self.controllers:
+            if hasattr(controller, 'enterWidget'):
+                controller.enterWidget(window, x, y)
+
+    def leaveWidget(self, window):
+        for controller in self.controllers:
+            if hasattr(controller, 'leaveWidget'):
+                controller.leaveWidget(window)
 

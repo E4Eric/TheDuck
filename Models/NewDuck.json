@@ -4,7 +4,7 @@
 
   "assetDir": "../Assets",
   "curStyleSheet": "New Light",
-  "controllers": [ "Highlighter", "TooltipManager", "MenuManager" ],
+  "controllers": [ "Highlighter", "TooltipManager", "MenuManager", "DragManager" ],
   "style": "App Canvas",
   "size": -1,
   "side": "top",
