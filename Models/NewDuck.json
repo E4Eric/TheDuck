@@ -104,6 +104,9 @@
     { "style":  "Panel (top)", "size":  40, "side":  "top", "dragController": "PanelSizer", "contents": [
       { "style": "Part", "partType": "Slider" }
     ]},
+    { "style":  "Panel (right)", "size":  300, "side":  "right", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+      { "style": "Part", "partType": "File Explorer" }
+    ]},
     { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [
       { "style": "Part", "partType": "Model Editor", "partName": "Text Editor" }
     ]}

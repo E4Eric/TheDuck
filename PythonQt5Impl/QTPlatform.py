@@ -33,28 +33,33 @@ class QTPlatform(QtWidgets.QWidget):
         self.app = app
         self.appModel = appModel
         self.parent = parent
-
         self.listeners = {}
-        self.partRegistry = {}
 
-        self.layers = {}
-
-        self.displayManager = DisplayManager.DisplayManager(self)
-
+        # HACK !! For now assume having 'aasetDir' means you're showing a completely new model
         if 'assetDir' in self.appModel:
-            self.assetManager = AssetManager.AssetManager(self)
+            self.type = "Model"
+            self.meData = {}
+            self.partRegistry = {}
+            self.layers = {}
             self.fontCache = {}
-        else:
-            self.assetManager = parent.assetManager
-            self.fontCache = parent.fontCache
 
-        # HACK !! the following code needs refactoring...it relies on 'model' windows all having 'controllers'
-        # it also assumes that a 'appModel' with no controllers is a 'layer' and inherits caches and such from its parent
+            self.assetManager = AssetManager.AssetManager(self)
+            self.displayManager = DisplayManager.DisplayManager(self)
+        else:
+            self.type = "Layer"
+            # Inherited attributes
+            self.meData = parent.meData   # The model window 'owns' the models elements
+            self.partRegistry = self.parent.partRegistry
+            self.layers = parent.layers   # All layers belong to the parent
+            self.fontCache = parent.fontCache
+            self.assetManager = parent.assetManager
+
+            self.displayManager = DisplayManager.DisplayManager(self)
+
         if 'controllers' in appModel:
             self.eventProxy = UIEventProxy.UIEventProxy(self)
             controllerNames = appModel['controllers']
             self.eventProxy.setControllers(controllerNames)
-            self.meData = {}
         else:
             self.meData = parent.meData
             self.eventProxy = parent.eventProxy
@@ -65,9 +70,9 @@ class QTPlatform(QtWidgets.QWidget):
         child = QTPlatform(self.app, appModel, self)
         return child
 
-    def getTopWindow(self):
+    def getModelWindow(self):
         window = self
-        while window.parent != None:
+        while window.type != 'Model':
             window = window.parent
         return window
 
@@ -76,26 +81,22 @@ class QTPlatform(QtWidgets.QWidget):
         return R(geo.x(), geo.y(), geo.width(), geo.height())
 
     def clearLayers(self):
-        layerCopy = copy.copy(self.getTopWindow().layers)
-        for layerMane in layerCopy:
-            self.removeLayer(layerMane)
-        print("done")
+        layerCopy = copy.copy(self.getModelWindow().layers)
+        for layerName in layerCopy:
+            self.removeLayer(layerName)
 
     def addLayer(self, name, me):
-        topWindow = self.getTopWindow()
-        window = QTPlatform(topWindow.app, me, topWindow)
+        window = QTPlatform(self.app, me, self.getModelWindow())
         dr = self.getMEData(me, 'drawRect')
         window.setGeometry(dr.x, dr.y, dr.w, dr.h)
         window.raise_()
         window.show()
-        topWindow.layers[name] = window
+        self.getModelWindow().layers[name] = window
 
     def removeLayer(self, name):
-        print(f' *** removeLayer {name} ***')
-        topWindow = self.getTopWindow()
-        if name in topWindow.layers:
-            window = topWindow.layers[name]
-            del topWindow.layers[name]
+        if name in self.layers:
+            window = self.getModelWindow().layers[name]
+            del self.getModelWindow().layers[name]
             window.hide()
             window.deleteLater()
 
@@ -265,11 +266,9 @@ class QTPlatform(QtWidgets.QWidget):
             self.setCursor(QCursor(Qt.ArrowCursor))
 
     def enterEvent(self, event):
-        print('@@@ Enter Widget @@@')
         self.eventProxy.enterWidget(self, event.pos().x(), event.pos().y())
 
     def leaveEvent(self, event):
-        print('!!! Leave Widget !!!')
         self.eventProxy.leaveWidget(self)
 
     def mouseMoveEvent(self, event):

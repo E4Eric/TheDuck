@@ -113,15 +113,12 @@ class createController():
             size = 10
         self.panel['size'] = size
 
-        print(f'Refresh: size = {size}')
         window.displayManager.refresh()
-        # window.app.processEvents()
 
         self.trackX = x
         self.trackY = y
 
     def mouseMove(self, window, me, x, y):
-        print("*** Mouse Move ***")
         if self.panel == None:
             return
 

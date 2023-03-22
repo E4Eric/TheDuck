@@ -23,7 +23,6 @@ sys.path.append(os.getcwd())
 # We have a model , create the window to show it
 app = QtWidgets.QApplication(sys.argv)
 window = QTPlatform.QTPlatform(app, appModel, None)
-# ctx = RuntimeContext(appModel, None)
 window.setGeometry(100, 100, 1200, 750)
 window.show()
 sys.exit(app.exec_())

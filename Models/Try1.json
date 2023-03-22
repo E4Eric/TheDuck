@@ -1,29 +1,33 @@
 {
   "assetDir": "../Assets",
-  "curStyleSheet": "New Light",
+  "curStyleSheet": "Try1",
   "controllers": [ "Highlighter", "TooltipManager", "MenuManager", "DragManager" ],
   "style": "App Canvas",
   "size": -1,
   "side": "top",
   "contents": [
     { "style": "Main Menu", "contents": [
-        { "style": "Main Menu Item", "label": "File",  "submenu": [
-              { "style": "Menu Item", "label": "Sub Menu Item 1", "lclickAction": "Echo Action" },
-              { "style": "Menu Item", "label": "Sub Menu Item 2", "lclickAction": "Echo Action" },
-              { "style": "Menu Item", "label": "Sub Menu Item 3", "lclickAction": "Echo Action" }
-          ]
+        { "style": "Main Menu Item", "label": "File",  "submenu":
+          { "style": "Menu", "contents": [
+            { "style": "Menu Item", "label": "Sub Menu Item 1", "lclickAction": "Echo Action" },
+            { "style": "Menu Item", "label": "Sub Menu Item 2", "lclickAction": "Echo Action" },
+            { "style": "Menu Item", "label": "Sub Menu Item 3", "lclickAction": "Echo Action" }
+          ]}
         },
-        { "style": "Main Menu Item", "label": "Edit",  "submenu": [
+        { "style": "Main Menu Item", "label": "Edit",  "submenu":
+          { "style": "Menu", "contents": [
             { "style": "Menu Item", "label": "Cut"},
-            { "style": "Menu Item", "label": "Copy", "submenu": [
+            { "style": "Menu Item", "label": "Copy", "submenu":
+              { "style": "Menu", "contents": [
                 { "style": "Menu Item", "label": "Sub Menu Item 1", "lclickAction": "Echo Action" },
                 { "style": "Menu Item", "label": "Sub Menu Item 2", "lclickAction": "Echo Action" },
                 { "style": "Menu Item", "label": "Sub Menu Item 3", "lclickAction": "Echo Action" }
-              ]
+              ]}
             },
             { "style": "Menu Item", "label": "Paste"}
-          ]
+          ]}
         },
+        { "style": "Main Menu Item", "label": "Edit" },
         { "style": "Main Menu Item", "label": "Source" },
         { "style": "Main Menu Item", "label": "Refactor" },
         { "style": "Main Menu Item", "label": "Navigate" },

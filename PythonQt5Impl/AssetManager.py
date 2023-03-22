@@ -19,14 +19,17 @@ class AssetManager():
 
     def loadModules(self, srcDir, moduleCache):
         sys.path.append(srcDir)
+        totalLines = 0
         for subdir, dirs, files in os.walk(srcDir):
             for file in files:
                 if (file.endswith('.py')):
                     lineCount = self.countLines(file, srcDir)
+                    totalLines += lineCount
                     moduleName = file.rsplit('.', 1)[0]
                     module = importlib.import_module(moduleName)
                     moduleCache[moduleName] = module
                     print(f'   ...{moduleName}: {lineCount}')
+        print(f'...TOTAL: {totalLines}')
 
     def getJsonData(self, srcDir):
         print(srcDir)
