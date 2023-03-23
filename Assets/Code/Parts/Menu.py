@@ -24,18 +24,19 @@ class MenuFrame(QWidget):
         self.ctx.painter = None
 
 
-def createPart(ctx, me):
-    if 'qtWidget' in me:
+def createPart(window, me):
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is not None:
         return
 
     print('create Part: ', me['partType'])
 
     # Create the QProgressBar widget and set its orientation to vertical
     menuME = me['modelElement']
-    menuFrame = MenuFrame(ctx, menuME, ctx.window)
-    menuRect = ctx.getMEData(menuME, 'drawRect')
+    menuFrame = MenuFrame(window, menuME, window)
+    menuRect = window.getMEData(menuME, 'drawRect')
     # Display the Menu
-    me['qtWidget'] = menuFrame
+    window.setMEData(me, 'qtWidget', menuFrame)
 
     menuFrame.show()
 

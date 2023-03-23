@@ -9,12 +9,15 @@ class createController():
         window.displayManager.layoutElement(x, y, 10000, 10000, menuME)
         dr = window.getMEData(menuME, 'drawRect')
         layerName = f'Menu {me["style"]}  {menuME["id"]}'
-        print(f'About to show layer: {layerName}')
         window.displayManager.addLayer(layerName, menuME)
 
     def clearSubMenus(self, window):
-        window.clearLayers()
+        if self.mainMenuItem is None:
+            return
+
+        self.mainMenuItem['style'] = "Main Menu Item"
         self.mainMenuItem = None
+        window.clearLayers()
 
 
     def showDropDown(self, window, me, x, y):
@@ -26,6 +29,7 @@ class createController():
             self.clearSubMenus(window)
 
         self.mainMenuItem = me
+        self.mainMenuItem['style'] = "Main Menu Item (Open)"
         dr = window.getMEData(me, 'drawRect')
         self.showMenu(window, me, dr.x, dr.y + dr.h)
 

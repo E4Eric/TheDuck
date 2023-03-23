@@ -16,12 +16,13 @@ class FontSizeSlider(QSlider):
         print(f"Slider value changed to {value}")
         me = self.window.getPart("Text Editor")
         if me != None:
-            widget = me['qtWidget']
+            widget = self.window.getMEData(me, 'qtWidget')
             font = QFont('Arial', value)
             widget.setFont(font)
 
 def createPart(window, me):
-    if 'qtWidget' in me:
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is not None:
         return
 
     print('create Part: ', me['partType'])
@@ -32,7 +33,7 @@ def createPart(window, me):
     # Display the progress bar
     slider.show()
 
-    me['qtWidget'] = slider
+    window.setMEData(me, 'qtWidget', slider)
 
 
 def setFocus(ctx, me):

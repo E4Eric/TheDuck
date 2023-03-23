@@ -12,7 +12,7 @@ parser.add_argument('-model', '--model_name', type=str, required=False,
 args = parser.parse_args()
 modelPath = args.model_name
 if modelPath == None:
-    modelPath = "../Models/NewDuck.json"
+    modelPath = "../Models/Try1.json"
 
 with open(modelPath, 'r') as modelData:
     appModel = json.load(modelData)

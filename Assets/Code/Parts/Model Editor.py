@@ -1,17 +1,24 @@
 import json
 
+def setAppModel(appModel):
+    print('set Model')
+
 def createPart(window, me):
-    if 'qtWidget' in me:
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is not None:
         return
 
     print('create Part: ', me['partType'])
 
-    modelPath = "../Models/EditorModel.json"
+    modelPath = me['modelPath']
     with open(modelPath, 'r') as modelData:
         appModel = json.load(modelData)
 
     childWindow = window.createChild(appModel)
-    me['qtWidget'] = childWindow
+    window.setMEData(me, 'qtWidget', childWindow)
+
+    if 'partName' in me:
+        window.registerPart(me, me['partName'])
     childWindow.show()
 
 def setFocus(ctx, me):

@@ -20,7 +20,7 @@ class createController():
     def clearHighlight(self, window):
         if self.highlightME != None:
             style = self.highlightME['style']
-            style = style.rstrip(' (Over)')
+            style = style.split(' (')[0]
             self.highlightME['style'] = style
             window.update()
             self.highlightME = None

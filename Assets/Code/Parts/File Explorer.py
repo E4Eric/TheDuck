@@ -12,14 +12,16 @@ class FileExplorer(QTreeView):
         self.parent = parent
 
     def mouseDoubleClickEvent(self, event):
+        window = self.parent
+
         index = self.indexAt(event.pos())
         model = self.model()
         item_data = model.data(index)
         path = model.filePath(index)
         if path.endswith('.py') or path.endswith('.json'):
-            me = self.ctx.getPart("Text Editor")
+            me = window.getPart("Text Editor")
             if me != None:
-                widget = me['qtWidget']
+                widget = window.getMEData(me, 'qtWidget')
                 with open(path, 'r') as f:
                     file_contents = f.read()
                 # widget.setSyntaxHighlighter(QTextEdit.SyntaxHighlighter.Python)
@@ -47,7 +49,8 @@ class FileExplorer(QTreeView):
             # Do something with the file
 
 def createPart(window, me):
-    if 'qtWidget' in me:
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is not None:
         return
 
     print('create Part: ', me['partType'])
@@ -67,8 +70,12 @@ def createPart(window, me):
     widget.setModel(file_system_model)
     widget.setRootIndex(file_system_model.index(rootPath))
 
-    me['qtWidget'] = widget
+    window.setMEData(me, 'qtWidget', widget)
 
+    if 'partName' in me:
+        window.registerPart(me, me['partName'])
 
-def setFocus(ctx, me):
+    widget.show()
+
+def setFocus(window, me):
     print('Set Focus:', me['label'])

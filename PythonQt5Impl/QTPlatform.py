@@ -70,6 +70,30 @@ class QTPlatform(QtWidgets.QWidget):
         child = QTPlatform(self.app, appModel, self)
         return child
 
+    def setAppModel(self, newAppModel):
+        modelRect = self.getMEData(self.appModel, 'drawRect')
+
+        # Clear out old widgets
+        for partName in self.partRegistry:
+            part = self.getPart(partName)
+            partWidget = self.getMEData(part, 'qtWidget')
+            print(f'Removing Widget {partName}')
+            partWidget.hide()
+            partWidget.deleteLater()
+        self.partRegistry = {}
+
+        self.appModel = newAppModel
+        self.setMEData(newAppModel, 'drawRect', modelRect)
+
+        # update assets if necessary
+        if 'assetDir' in self.appModel:
+            self.assetManager = AssetManager.AssetManager(self)
+
+        self.displayManager.refresh()
+
+        print('OK')
+
+
     def getModelWindow(self):
         window = self
         while window.type != 'Model':
@@ -109,6 +133,11 @@ class QTPlatform(QtWidgets.QWidget):
         self.meData[id][key] = value
 
     def getMEData(self, me, key):
+        if 'id' not in me:
+            return None
+        if  key not in self.meData[me['id']]:
+            return None
+
         value = self.meData[me['id']][key]
         return value
 

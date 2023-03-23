@@ -7,14 +7,15 @@ def showFile(widget, path):
         file_contents = f.read()
     widget.setPlainText(file_contents)
 
-def createPart(ctx, me):
-    if 'qtWidget' in me:
+def createPart(window, me):
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is not None:
         return
 
     print('create Part: ', me['partType'])
 
     # Create the QProgressBar widget and set its orientation to vertical
-    widget = QTextEdit(ctx.window)
+    widget = QTextEdit(window)
     font = QFont('Arial', 18)
     widget.setFont(font)
 
@@ -23,12 +24,13 @@ def createPart(ctx, me):
 
 
     # Display the progress bar
-    me['qtWidget'] = widget
+    window.setMEData(me, 'qtWidget', widget)
+
     if 'partName' in me:
-        ctx.registerPart(me, me['partName'])
+        window.registerPart(me, me['partName'])
 
     widget.show()
 
 
-def setFocus(ctx, me):
+def setFocus(window, me):
     print('Set Focus:', me['label'])

@@ -6,11 +6,12 @@ def layout(window, available, me):
     dr = copy.copy(available)
 
     # create the part itself
-    if 'qtWidget' not in me:
+    qtWidget = window.getMEData(me, 'qtWidget')
+    if qtWidget is None:
         partModule = window.assetManager.getPart(me['partType'])
         partModule.createPart(window, me)
 
-    widget = me['qtWidget']
+    widget = window.getMEData(me, 'qtWidget')
     window.setMEData(me, 'drawRect', dr)
 
     # place the widget 'inside' the frame

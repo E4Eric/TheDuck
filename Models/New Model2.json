@@ -28,11 +28,11 @@
       }
     ]
     },
-    { "style":  "Panel (left)", "size":  300, "side":  "left", "dragController": "PanelSizer","dragWidth": 5, "contents": [
+    { "style":  "Panel (top)", "size":  500, "side":  "top", "dragController": "PanelSizer","dragWidth": 5, "contents": [
       { "style": "Part", "partType": "File Explorer", "partName": "File Explorer" }
     ]},
-    { "style":  "Panel (none)", "size":  -1, "side":  "left",  "contents": [
-      { "style": "Part", "partType": "Model Editor", "modelPath": "../Models/New Model.json", "partName": "Model Editor" }
+    { "style":  "Panel (none)", "size":  -1, "side":  "top",  "contents": [
+      { "style": "Part", "partType": "Text Editor", "partName": "Text Editor" }
     ]}
   ]
 }
