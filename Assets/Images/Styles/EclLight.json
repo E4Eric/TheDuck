@@ -39,7 +39,7 @@
        "lw": 0, "th": 0, "rw": 0, "bh": 0,
 
        "labelGap": 3,
-       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -50,7 +50,7 @@
 
        "labelGap": 3,
        "LeftClickAction": "Show DropDown",
-       "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -105,7 +105,7 @@
        "lw": 0, "th": 0, "rw": 0, "bh": 0,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -115,7 +115,7 @@
        "lw": 0, "th": 0, "rw": 1, "bh": 0,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -125,7 +125,7 @@
        "lw": 1, "th": 1, "rw": 1, "bh": 1,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -135,7 +135,7 @@
        "lw": 1, "th": 1, "rw": 1, "bh": 1,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -145,7 +145,7 @@
        "lw": 1, "th": 1, "rw": 1, "bh": 1,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -155,7 +155,7 @@
        "lw": 1, "th": 1, "rw": 1, "bh": 1,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },
@@ -165,7 +165,7 @@
        "lw": 1, "th": 1, "rw": 1, "bh": 1,
 
       "labelGap": 4,
-      "fontSpec": "color: black; font-family: Arial; font-size: 9;",
+      "fontSpec": "color: black; font-family: Arial; font-size: 16;",
       "layout": "label",
       "renderer": "foo"
     },

@@ -1,0 +1,72 @@
+{
+  "appname" : "Eclipse Baby Duck",
+  "appTitle": "New Light",
+
+  "assetDir": "../Assets",
+  "curStyleSheet": "New Light",
+  "controllers": [ "Highlighter", "TooltipManager", "MenuManager", "DragManager" ],
+  "style": "App Canvas",
+  "size": -1,
+  "side": "top",
+  "contents": [
+    { "style": "Main Menu", "contents": [
+        { "style": "Main Menu Item", "label": "File", "submenu": [
+              { "style": "Menu Item", "label": "New Model", "lclickAction": "New Model" },
+              { "style": "Menu Item", "label": "Open Model", "lclickAction": "Open Model" },
+              { "style": "Menu Item", "label": "Save Model", "lclickAction": "Save Model" },
+              { "style": "Menu Item", "label": "Export Model", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Import Model", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Preferences", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Help", "lclickAction": "Echo Action" }
+          ]
+        },
+        { "style": "Main Menu Item", "label": "Edit", "submenu": [
+              { "style": "Menu Item", "label": "Undo", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Redo", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Cut", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Copy", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Paste", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Delete", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Select All", "lclickAction": "Echo Action" }
+          ]
+        },
+        { "style": "Main Menu Item", "label": "View", "submenu": [
+              { "style": "Menu Item", "label": "Zoom In", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Zoom Out", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Hide Toolbar", "lclickAction": "Echo Action" }
+          ] },
+        { "style": "Main Menu Item", "label": "Tools", "submenu": [
+              { "style": "Menu Item", "label": "Add Node", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Add Label", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Group Nodes", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Change Style", "lclickAction": "Echo Action" }
+          ] },
+        { "style": "Main Menu Item", "label": "Layout", "submenu": [
+              { "style": "Menu Item", "label": "Layers", "lclickAction": "Echo Action" }
+          ] },
+        { "style": "Main Menu Item", "label": "Help", "submenu": [
+              { "style": "Menu Item", "label": "Styles", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Asset Management", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Export Model", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Import Model", "lclickAction": "Echo Action" },
+              { "style": "Menu Item", "label": "Preferences", "lclickAction": "Echo Action" }
+          ] }
+      ]
+    },
+    { "style": "Trim", "contents": [
+      { "style": "Tool Bar", "contents": [
+          { "style": "Tool Item", "icon": "Drop to Frame", "tooltip": "Test Tooltip", "lclickAction": "Echo Action" },
+          { "style": "Tool Item", "icon": "Use Step Filters", "tooltip": "Save", "lclickAction": "Echo Action" },
+          { "style": "Tool Item", "icon": "Open Web Browser", "tooltip": "Save All", "lclickAction": "Echo Action" }
+        ]
+      }
+    ]
+    },
+    { "style":  "Panel (left)", "size":  300, "side":  "left", "dragWidth": 10, "contents": [
+      { "style": "Part", "partType": "Model Explorer", "partName": "Model Explorer" }
+    ]},
+    { "style":  "Panel (none)", "size":  -1, "side":  "left",  "contents": [
+      { "style": "Part", "partType": "Model Editor", "modelPath": "../Models/EclipseDuck.json", "partName": "Model Editor" }
+    ]}
+  ]
+}

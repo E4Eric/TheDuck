@@ -10,8 +10,8 @@ def draw(window, me):
 
     if 'icon' in me:
         icon = window.assetManager.getIconImage(me['icon'])
-        window.window.drawIcon(x, y, icon)
-        x += window.window.getImageWidth(icon)
+        window.drawIcon(x, y, icon)
+        x += window.getImageWidth(icon)
         if 'label' in me:
             if 'labelGap' in sd:
                 x += sd['labelGap']
@@ -22,4 +22,4 @@ def draw(window, me):
         if 'fontSpec' in sd:
             fontSpec = sd['fontSpec']
 
-        window.window.drawText(x, y, text, fontSpec)
+        window.drawText(x, y, text, fontSpec)

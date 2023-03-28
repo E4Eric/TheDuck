@@ -45,6 +45,7 @@ class QTPlatform(QtWidgets.QWidget):
 
             self.assetManager = AssetManager.AssetManager(self)
             self.displayManager = DisplayManager.DisplayManager(self)
+            self.eventProxy = UIEventProxy.UIEventProxy(self)
         else:
             self.type = "Layer"
             # Inherited attributes
@@ -55,14 +56,11 @@ class QTPlatform(QtWidgets.QWidget):
             self.assetManager = parent.assetManager
 
             self.displayManager = DisplayManager.DisplayManager(self)
+            self.eventProxy = parent.eventProxy
 
         if 'controllers' in appModel:
-            self.eventProxy = UIEventProxy.UIEventProxy(self)
             controllerNames = appModel['controllers']
             self.eventProxy.setControllers(controllerNames)
-        else:
-            self.meData = parent.meData
-            self.eventProxy = parent.eventProxy
 
         self.setMouseTracking(True)
 
@@ -194,11 +192,11 @@ class QTPlatform(QtWidgets.QWidget):
     def forceUpdate(self, x, y, w, h):
         self.update()
 
-    def setTransparentColor(self, pixmap, r, g, b):
+    def setTransparentColor(self, pixmap, x, y):
         # Create a mask from the pixmap that matches the color you want to make transparent
-        mask = pixmap.createMaskFromColor(QColor(r, g, b))
-
-        # Set the mask on the pixmap
+        img = pixmap.toImage()
+        color = img.pixelColor(x, y)
+        mask = pixmap.createMaskFromColor(color)
         pixmap.setMask(mask)
 
     def loadImage(self, path):
