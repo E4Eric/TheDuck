@@ -1,0 +1,28 @@
+{
+  "imagePath": "DarkExplorer.png",
+  "iconGrids": [
+	  {
+		  "name": "Dark Explorer",
+		  "srcX": 0,
+		  "srcY": 0,
+		  "srcW": 192,
+		  "srcH": 16,
+		  "gridX": 16,
+		  "gridY": 16,
+		  "iconNames": [
+			  "Folder (closed)",
+			  "Python Folder",
+			  "Folder (open)",
+			  "Folder (empty)",
+			  "Data File",
+			  "Image File",
+			  "Python File",
+			  "Markdown File",
+			  "Assets",
+			  "Project",
+			  "Package",
+			  "Runtime"
+		  ]
+	  }
+    ]
+}
