@@ -1,3 +1,6 @@
+import json
+
+
 class createController():
     def __init__(self):
         self.panel = None
@@ -31,42 +34,40 @@ class createController():
     def setDragState(self, window, x, y):
         dr = window.getMEData(self.panel, 'drawRect')
         sd = window.assetManager.getStyleData(self.panel['style'])
+
+        dragWidth = self.panel['dragWidth']
         if self.panelSide == 'left':
-            # Hack-ish...the style is expected to show an affordance
             maxX = dr.x + dr.w
-            if (maxX - sd['rw']) <= x <= maxX:
+            if (maxX - dragWidth) < x <= maxX:
                 self.okToDrag = True
                 window.setPointer("EW")
             else:
                 window.setPointer("Default")
 
         if self.panelSide == 'bottom':
-            # Hack-ish...the style is expected to whow an affordance
-            if dr.y <= y <= (dr.y + sd['th']):
+            if dr.y <= y <= (dr.y + dragWidth):
                 self.okToDrag = True
                 window.setPointer("NS")
             else:
                 window.setPointer("Default")
 
         if self.panelSide == 'right':
-            # Hack-ish...the style is expected to whow an affordance
-            if dr.x <= x <= (dr.x + sd['lw']):
+            if dr.x <= x <= (dr.x + dragWidth):
                 self.okToDrag = True
                 window.setPointer("EW")
             else:
                 window.setPointer("Default")
 
         if self.panelSide == 'top':
-            # Hack-ish...the style is expected to show an affordance
             maxY = dr.y + dr.h
-            if (maxY - sd['bh']) <= y <= maxY:
+            if (maxY - dragWidth) <= y <= maxY:
                 self.okToDrag = True
                 window.setPointer("NS")
             else:
                 window.setPointer("Default")
 
     def enter(self, window, me, x, y):
-        if "Panel" in me['style']:
+        if "dragWidth" in me:
             self.panel = me
             self.sd = window.assetManager.getStyleData(self.panel['style'])
             self.panelSide = self.panel['side']

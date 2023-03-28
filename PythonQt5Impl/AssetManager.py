@@ -8,8 +8,22 @@ import sys
 class AssetManager():
     def __init__(self, window):
         self.window = window
-        self.lineCount = 0
+
+        # Caches
+        self.imageCache = {}
+        self.styleCache = {}
+        self.iconCache = {}
+        self.layoutCodeCache = {}
+        self.rendererCodeCache = {}
+        self.controllerCodeCache = {}
+        self.actionCodeCache = {}
+        self.partCodeCache = {}
+
+        self.loadedAssets = []  # prevent reloading existing assets
         self.loadAssets(window.appModel['assetDir'])
+
+        # debug code
+        self.lineCount = 0
 
     def countLines(self, file, srcDir):
         filePath = srcDir + '/' + file
@@ -70,7 +84,7 @@ class AssetManager():
 
     def getStyleImage(self, styleName):
         cacheName = self.window.appModel['curStyleSheet']
-        styleSheet = self.styleCache[self.window.appModel['curStyleSheet']]
+        styleSheet = self.styleCache[cacheName]
         sheetImage = self.imageCache['Style Sheet/' + styleSheet['name']]
         style = styleSheet['Styles'][styleName]
         styleImage = self.window.crop(sheetImage, style['srcX'], style['srcY'], style['srcW'], style['srcH'])
@@ -108,8 +122,8 @@ class AssetManager():
             imagePath = iconsDir + '/' + iconSet['imagePath']
             iconSrc = self.window.loadImage(imagePath)
 
-            # HACK!! Allows me to re-use the dark icons (and checks the transparency coce...;-)
-            self.window.setTransparentColor(iconSrc, 81, 86, 88)
+            # HACK!! Assume top/left pixel is transparent Allows me to re-use the dark icons (and checks the transparency coce...;-)
+            self.window.setTransparentColor(iconSrc, 0, 0)
 
             setList = iconSet['iconGrids']
             for iconGrid in setList:
@@ -215,41 +229,35 @@ class AssetManager():
                 self.drawModelElement(kid)
 
     def loadAssets(self, assetDir):
-        # Image-based assets
-        self.imageCache = {}  # vgeneric cacne of 'named' images from all other assets
+        if assetDir in self.loadedAssets:
+            return  # No-op
+        self.loadedAssets.append(assetDir)
 
-        self.styleCache = {}
         stylesDir = assetDir + "/Images/Styles"
         if os.path.isdir(stylesDir):
             self.loadStyleSheets(stylesDir)
 
-        self.iconCache = {}
         iconsDir = assetDir + "/Images/Icons"
         if os.path.isdir(iconsDir):
             self.loadIconSets(iconsDir)
 
         # Code-based assets
-        self.layoutCodeCache = {}
         layoutsDir = assetDir + "/Code/Layouts"
         if os.path.isdir(layoutsDir):
             self.loadLayouts(layoutsDir)
 
-        self.rendererCodeCache = {}
         rendererssDir = assetDir + "/Code/Renderers"
         if os.path.isdir(rendererssDir):
             self.loadRenderers(rendererssDir)
 
-        self.controllerCodeCache = {}
         controllersDir = assetDir + "/Code/controllers"
         if os.path.isdir(controllersDir):
             self.loadControllers(controllersDir)
 
-        self.actionCodeCache = {}
         actionsDir = assetDir + "/Code/ActionGroups"
         if os.path.isdir(actionsDir):
             self.loadActions(actionsDir)
 
-        self.partCodeCache = {}
         partsDir = assetDir + "/Code/Parts"
         if os.path.isdir(partsDir):
             self.loadParts(partsDir)

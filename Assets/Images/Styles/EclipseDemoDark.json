@@ -1,6 +1,6 @@
 {
-  "imagePath": "newLight.png",
-  "name": "New Light",
+  "imagePath": "EclipseDemoDark.png",
+  "name": "Eclipse Demo Dark",
   "Styles": {
     "Transparent Color": {
        "srcX": 10, "srcY": 10, "srcW": 1, "srcH": 1
@@ -8,7 +8,7 @@
     "App Canvas": {
        "srcX": 200, "srcY": 100, "srcW": 48, "srcH": 48,
        "lm": 0, "tm": 0, "rm": 0, "bm": 0,
-       "lw": 3, "th": 3, "rw": 3, "bh": 3,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
 
       "side": "top",
       "percentage": 100,
@@ -31,7 +31,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer",
        "controller": "Main Menu Item"
@@ -43,7 +43,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -54,7 +54,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -74,7 +74,7 @@
 
        "labelGap": 3,
         "side": "left",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -85,7 +85,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: gray; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: gray; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -96,7 +96,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -107,7 +107,7 @@
 
        "labelGap": 3,
         "side": "top",
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
        "layout": "label",
        "renderer": "Label Renderer"
     },
@@ -155,7 +155,7 @@
        "lw": 1, "th": 1, "rw": 6, "bh": 4,
 
        "labelGap": 3,
-       "fontSpec": "color: black; font-family: Arial; font-size: 16;",
+       "fontSpec": "color: black; font-family: Arial; font-size: 12;",
         "side": "top",
        "layout": "label",
        "renderer": "Label Renderer"
@@ -207,6 +207,38 @@
 
        "layout": "panel",
        "renderer": "frame"
+    },
+    "Eclipse Project View": {
+       "srcX": 851, "srcY": 287, "srcW": 497, "srcH": 816,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "layout": "panel",
+      "renderer": "FakeView"
+    },
+    "Eclipse Problems View": {
+       "srcX": 1495, "srcY": 1183, "srcW": 1589, "srcH": 377,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "layout": "panel",
+      "renderer": "FakeView"
+    },
+    "Eclipse Outline View": {
+       "srcX": 3480, "srcY": 432, "srcW": 585, "srcH": 741,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "layout": "panel",
+      "renderer": "FakeView"
+    },
+    "Eclipse Editor Area": {
+       "srcX": 1425, "srcY": 200, "srcW": 1873, "srcH": 917,
+       "lm": 0, "tm": 0, "rm": 0, "bm": 0,
+       "lw": 0, "th": 0, "rw": 0, "bh": 0,
+
+      "layout": "panel",
+      "renderer": "FakeView"
     }
   }
 }
