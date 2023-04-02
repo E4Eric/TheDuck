@@ -1,5 +1,7 @@
 class createController():
-    def __init__(self):
+    def __init__(self, window):
+        self.window = window
+
         self.highlightME = None
         # self.registerHighlightListener()
 

@@ -2,7 +2,9 @@ import json
 
 
 class createController():
-    def __init__(self):
+    def __init__(self, window):
+        self.window = window
+
         self.panel = None
         self.sd = None
         self.panelSide = None
