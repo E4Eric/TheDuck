@@ -1,8 +1,6 @@
 import threading
 
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QLabel
-
 
 class UIEventProxy():
     def __init__(self, window):
@@ -40,7 +38,7 @@ class UIEventProxy():
 
     def addController(self, name):
         module = self.window.assetManager.getController(name)
-        controller = module.createController()
+        controller = module.createController(self.window)
         self.controllers.append(controller)
 
     def setControllers(self, names):
@@ -135,6 +133,11 @@ class UIEventProxy():
         for controller in self.controllers:
             if hasattr(controller, 'mouseButtonReleased'):
                 controller.mouseButtonReleased(window, button, self.curElement, self.mouseX, self.mouseY)
+
+    def resizeEvent(self, window,  w, h):
+        for controller in self.controllers:
+            if hasattr(controller, 'resizeEvent'):
+                controller.resizeEvent(window, w, h)
 
     def enterWidget(self, window, x, y):
         for controller in self.controllers:

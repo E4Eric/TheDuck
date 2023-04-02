@@ -1,8 +1,5 @@
-import os
-
-from PyQt5.QtCore import QModelIndex
-from PyQt5.QtGui import QFont, QStandardItemModel, QStandardItem, QIcon, QPixmap, QPainter
-from PyQt5.QtWidgets import QTreeView, QFileSystemModel, QTextEdit, QWidget
+from PyQt5.QtGui import QPixmap, QPainter
+from PyQt5.QtWidgets import QWidget
 
 
 class FakeView(QWidget):

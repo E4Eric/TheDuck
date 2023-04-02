@@ -2,7 +2,6 @@ import builtins
 import copy
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QRect
 from PyQt5.QtGui import QPixmap, QColor, QFont, QFontMetrics, QPainter, QCursor
@@ -179,6 +178,7 @@ class QTPlatform(QtWidgets.QWidget):
         size = event.size()
         available = R(0,0, size.width(), size.height())
         self.displayManager.layout(available, self.appModel)
+        self.eventProxy.resizeEvent(self, size.width(), size.height())
 
     def paintEvent(self, event): 
         self.painter = QPainter()   # Cache for callbacks...rebderers don't need to know

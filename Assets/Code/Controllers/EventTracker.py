@@ -1,6 +1,6 @@
 class createController():
-    def __init__(self, ctx):
-        self.ctx = ctx
+    def __init__(self, window):
+        self.window = window
         # self.registerHighlightListener()
 
     def printEvent(self, name, me, x, y):
