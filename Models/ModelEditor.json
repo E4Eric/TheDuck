@@ -65,6 +65,9 @@
     { "style":  "Panel (left)", "size":  300, "side":  "left", "dragWidth": 10, "contents": [
       { "style": "Part", "partType": "Model Explorer", "partName": "Model Explorer" }
     ]},
+    { "style":  "Panel (bottom)", "size":  300, "side":  "bottom", "dragWidth": 10, "contents": [
+      { "style": "Part", "partType": "Editor Frame", "partName": "Editor Frame", "dirPath": "../Assets/Code/Parts" }
+    ]},
     { "style":  "Panel (none)", "size":  -1, "side":  "left",  "contents": [
       { "style": "Part", "partType": "Model Editor", "modelPath": "../Models/EclipseDuck.json", "partName": "Model Editor" }
     ]}

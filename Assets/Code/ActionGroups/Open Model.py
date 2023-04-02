@@ -17,6 +17,6 @@ def execute(window, me):
         with open(modelPath, 'r') as modelData:
             appModel = json.load(modelData)
 
-        me = window.getPart("Model Editor")
+        me = window.getPart("Model Explorer")
         modelWidget = window.getMEData(me, 'qtWidget')
-        modelWidget.setAppModel(appModel)
+        modelWidget.setEditorModel(appModel)

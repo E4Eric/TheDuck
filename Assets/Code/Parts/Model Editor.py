@@ -1,5 +1,6 @@
 import json
 
+
 def setAppModel(appModel):
     print('set Model')
 
