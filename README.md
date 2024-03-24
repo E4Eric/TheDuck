@@ -1,22 +1,26 @@
+![vd6(Small)](https://github.com/E4Eric/TheDuck/assets/2371669/7fc8409f-e41a-41b2-b3a1-10b412423489)
+
+
+
 # The Versatile Duck
-- a UI is an attempt to allow the user to push their ideas through a keyboard and a mouse; good ones help with this ;-)
+
+> **_"A UI is an attempt to allow the user to push their ideas through a keyboard and a mouse; good ones help with this"_** ;-)
 
 The Duck is a UI Toolkit architecture that was designed using a first principals approach.
 Let's imagine we exist at a time before UI Toolkits and we're trying to design one from scratch using
-what we know now about the applications we need to support...
+what we know now about the applications we need to support.
+
+Over the years UI's have converged on a 'conventional' preentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard mwtaphors.
+I'll refer to these as 'conventional' apps.
 
 'Versatile' comes from the duck's being a 'pure' architecture, it only defines the concepts without inferring how they might be used.
-As such it can mimic the UI of any app, from a simple calculator to a complex IDE. Importantly, the calculator doesn't need to bring any baggage that might be needed to suppoty more complex spps.
-# The Question
+As such it can mimic the UI of any app, from a simple calculator to a complex IDE. Importantly, the calculator doesn't need to bring any baggage that might be needed to support more complex spps.
 
 What are the fewest number of concepts that can be used to build a UI Toolkit that can mimic 'conventional' UI Apps?
-Over the years UI's have converged on standard metaphors for interacting with thr User;
-Menus, Toolbars and such. This is by necessity once the user base expands to the general population.
-Non computer literate users need to be able to use the software without having to learn new metaphors for each app / page.
 
 To ensure that  aren't making a toy we'll use one of the more complex UI's; the Eclipse IDE.
-This has two advantages; it's a complex UI and it's open source so we and the Eclipse license allows me to use the icons etc without encountering potential IP issues.
-I'm also thoroughly familiar with it having been a committer for a=over a decade.
+This has two advantages; it's a complex UI and it's open source so the Eclipse license allows me to use the icons etc without encountering potential IP issues.
+I'm also thoroughly familiar with it having been a Platform UI committer for a=over a decade (and the dev lead for e4).
 
 # Observations
 
