@@ -10,7 +10,7 @@ The Duck is a UI Toolkit architecture that was designed using a first principals
 Let's imagine we exist at a time before UI Toolkits and we're trying to design one from scratch using
 what we know now about the applications we need to support.
 
-Over the years UI's have converged on a 'conventional' preentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard mwtaphors.
+Over the years UI's have converged on a 'conventional' preentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard metaphors.
 I'll refer to these as 'conventional' apps.
 
 'Versatile' comes from the duck's being a 'pure' architecture, it only defines the concepts without inferring how they might be used.
@@ -54,6 +54,18 @@ What's interesting in the image above?
 - The main area is sub-divided into boxes, each having their own (similar) arrangements of words and images
 
 At this point we're only trying to look like a duck; what do wee need to replicate this?
+
+# The Core architecture
+First we'll define the main components of the architecture and we'll add extras to support
+behaviours (i.e. walk like a duck)
+## Display Manager
+The first requirement is to decide which low level window API we want to use. Note that this will likely also determine
+which language we'll use to write the other components in 
+## Model Manager 
+ This manages model operation like Load / Save as well as the main iteration based operations; Layout, Draw and Pick  
+
+
+- We need a model; for now it only has to define the UI as given in the screen cap
 
 ## The Model
 We start with the model because *everything* starts with the model. IMO this should be true
