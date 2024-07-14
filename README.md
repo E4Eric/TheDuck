@@ -23,7 +23,23 @@ First let's identify the things we cannot possibly do without:
 - We're a UI app so we need a 'window' to draw on and to hook into mouse / kb events
 - We need a model to contain the definition and meta-data need to define the application
 
-Here 'main' does the normal things; arg parsing / verification... Then it loads the model and instantiates the 'window', passing in the modelas a constructor arg.
+Here 'main' does the normal things; arg parsing / verification... Then it loads the model and instantiates the 'window', passing in the model as a constructor arg. Note that these are concrete classes and determine both the language and base UI API (here I use Python / pyqt5).
+
+New we need to define the Duck's actual implementation; we need to be able to render the UI represented in the given model (look like a duck) and
+manage incoming base UI events to mimic the target app's behaviour (act like a duck). 
+
+Duck Architecture
+
+First Rendering: 
+Wneh the window reciaves a 'paint' event it calls the 'DisplayManager'; first to lay out the model and then to render the result.
+The Display does this by:
+- taking the model element
+- extracting the relavent 'layout' and 'renderer' ID's
+- retrieving the actual code from the AssetManager and invoking it
+
+Now Behaviour:
+The window traps incoming mouse / kb events and simply forwards them to the UIEventProxy. This provides a number of API's that can be used by
+'controllers' to take actions (i.e. hilight on hover...). To facilitate this the proxy generates its own pseudo-events; Enter / Leave & Hover 
 
 To ensure that  aren't making a toy we'll use one of the more complex UI's; the Eclipse IDE.
 This has two advantages; it's a complex UI and it's open source so the Eclipse license allows me to use the icons etc without encountering potential IP issues.
