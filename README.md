@@ -10,13 +10,20 @@ The Duck is a UI Toolkit architecture that was designed using a first principals
 Let's imagine we exist at a time before UI Toolkits and we're trying to design one from scratch using
 what we know now about the applications we need to support.
 
-Over the years UI's have converged on a 'conventional' preentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard metaphors.
+Over the years UI's have converged on a 'conventional' presentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard metaphors.
 I'll refer to these as 'conventional' apps.
 
 'Versatile' comes from the duck's being a 'pure' architecture, it only defines the concepts without inferring how they might be used.
 As such it can mimic the UI of any app, from a simple calculator to a complex IDE. Importantly, the calculator doesn't need to bring any baggage that might be needed to support more complex spps.
 
 What are the fewest number of concepts that can be used to build a UI Toolkit that can mimic 'conventional' UI Apps?
+
+First let's identify the things we cannot possibly do without:
+- We're an app in some language so we need a 'main'
+- We're a UI app so we need a 'window' to draw on and to hook into mouse / kb events
+- We need a model to contain the definition and meta-data need to define the application
+
+Here 'main' does the normal things; arg parsing / verification... Then it loads the model and instantiates the 'window', passing in the modelas a constructor arg.
 
 To ensure that  aren't making a toy we'll use one of the more complex UI's; the Eclipse IDE.
 This has two advantages; it's a complex UI and it's open source so the Eclipse license allows me to use the icons etc without encountering potential IP issues.
