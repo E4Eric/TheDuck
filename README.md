@@ -13,8 +13,11 @@ what we know now about the applications we need to support.
 Over the years UI's have converged on a 'conventional' presentation for interacting with thr User. We all know them; Menus, Toolbars and such. This is by necessity once the user base expands to the general population (i.e. your grandma...;-) these folks need standard metaphors.
 I'll refer to these as 'conventional' apps.
 
-'Versatile' comes from the duck's being a 'pure' architecture, it only defines the concepts without inferring how they might be used.
-As such it can mimic the UI of any app, from a simple calculator to a complex IDE. Importantly, the calculator doesn't need to bring any baggage that might be needed to support more complex spps.
+'Versatile' comes from the duck's being a 'pure' architecture, it only defines the concepts without inferring how they might be used. As such it can mimic the UI of any app, from a simple calculator to a complex IDE. Importantly, the calculator doesn't need to bring any baggage that might be needed to support more complex apps.
+
+The Foundation
+
+This idea of keeping everything very granular rather than 'bundling' the code into some formalism (class, dll...) is the basis for this flexibility. Current UI Toolkits are monolithic; want an edit control ya get the whole meal, including dessert...;-). Here we keep the various snippets of functional code in separate files (code assets) and provide aggregation of the components *specifically required* for a particular UI. This is more akin to building something from lego; putting the right blocks together to assemble the whole. A UI toolkit is what you get when you glue the blocks together...
 
 What are the fewest number of concepts that can be used to build a UI Toolkit that can mimic 'conventional' UI Apps?
 
@@ -25,8 +28,7 @@ First let's identify the things we cannot possibly do without:
 
 Here 'main' does the normal things; arg parsing / verification... Then it loads the model and instantiates the 'window', passing in the model as a constructor arg. Note that these are concrete classes and determine both the language and base UI API (here I use Python / pyqt5).
 
-New we need to define the Duck's actual implementation; we need to be able to render the UI represented in the given model (look like a duck) and
-manage incoming base UI events to mimic the target app's behaviour (act like a duck). 
+Now we need to define the Duck's actual implementation; we need to be able to render the UI represented in the given model (look like a duck) and manage incoming base UI events to mimic the target app's behaviour (act like a duck). 
 
 Duck Architecture
 
@@ -38,12 +40,9 @@ The Display does this by:
 - retrieving the actual code from the AssetManager and invoking it
 
 Now Behaviour:
-The window traps incoming mouse / kb events and simply forwards them to the UIEventProxy. This provides a number of API's that can be used by
-'controllers' to take actions (i.e. hilight on hover...). To facilitate this the proxy generates its own pseudo-events; Enter / Leave & Hover 
+The window traps incoming mouse / kb events and simply forwards them to the UIEventProxy. This provides a number of API's that can be used by 'controllers' to take actions (i.e. hilight on hover...). To facilitate this the proxy generates its own pseudo-events; Enter / Leave & Hover 
 
-To ensure that  aren't making a toy we'll use one of the more complex UI's; the Eclipse IDE.
-This has two advantages; it's a complex UI and it's open source so the Eclipse license allows me to use the icons etc without encountering potential IP issues.
-I'm also thoroughly familiar with it having been a Platform UI committer for a=over a decade (and the dev lead for e4).
+To ensure that  aren't making a toy we'll use one of the more complex UI's; the Eclipse IDE. This has two advantages; it's a complex UI and it's open source so the Eclipse license allows me to use the icons etc without encountering potential IP issues.
 
 # Observations
 
@@ -53,7 +52,7 @@ which can be used to inform the required architecture.
 1. The UI is a tree of components. Each component has a parent and zero or more children.
 2. The layout of these components completely tiles the app window (i.e. there are no 'holes'). The combination of these rwo means that we can use recursion for the three main support operations:
 
-3. The file system is your friend. SSD's remove the latency issues which caused current caching strats, Now we can use the projects file structure directly.
+3. The file system is your friend. SSD's remove the latency issues which caused current caching strats, Now we can use the project's file structure directly.
 1. Layout: The layout traverses the tree of UI elements asking the same question:
    1. How much space do you need? We call each element's layout code passing in the element to be drawn as well as the 'available' space.
    2. The layout code lays out the child elements (recursively) and ultimately returns the remaining available area. Important to note is that as each stage of the layout progresses it captures the final screen position in the associated element.
